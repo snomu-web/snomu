@@ -2,121 +2,109 @@
 	<div class="mine">
 		<van-nav-bar class='til' title="海汇"/>
 		<div class="min_top flex_start">
-			<div class="flex_start_v top_tel">
-				<img class="tx_img" src="@/assets/tx@2x.png"/>
+			<div class="flex_between_v top_tel">
+				<div class="flex_between_v">
+					<img class="tx_img" src="@/assets/pic_touxiang@2x.png"/>
+					<p class="phone_top">{{phoneSlice}}</p>					
+				</div>
 				<div class="">
-					<p>{{phoneSlice}}</p>
 					<div class="flex_start_v">
-						<img class="" src="@/assets/dj@2x.png"/>
-						<span class="font12">{{ userGradeName }}级会员</span>
+						<img class="star_img" src="@/assets/icon_star@3x.png"/>
+						<p class="star_p">{{ userGradeName }}星会员</p>
 					</div>
 				</div>				
 			</div>			
-		</div>
-		<div class="min_sec">
-			<div class="top_con flex_between">
-				<div class="flex_clu_v">
-					<div class="flex_start">
-						<p class="top_p1">冻结金额</p>
-						<p class="top_p2">{{ price }}</p>
+			<div class="min_sec">
+				<div class="top_con">
+					<div class="flex_between_v con_d1">
+						<p class="">余额（元）</p>
+						<div class="flex_between_v">
+							<img src="@/assets/btn_chongzhi@3x.png" style="width: 1.6rem; height: .6rem;"/>
+							<p class="y_p1">转出</p>								
+						</div>
 					</div>
-					<div class="flex_start">
-						<p class="top_p1">买入中订单数</p>
-						<p class="top_p2">{{buyOrderNum}}</p>
+					<p class="y_p2">20000</p>
+					<div class="flex_between_v marcon">
+						<div class="">
+							<p class="y_p3">10000000</p>
+							<p class="y_p4">累计购买(元)</p>
+						</div>
+						<div class="y_texcen">
+							<p class="y_p3">5500</p>
+							<p class="y_p4">累计收益积分</p>
+						</div>
+						<div class="y_texrgh">
+							<p class="y_p3">500</p>
+							<p class="y_p4">今日收益</p>
+						</div>
 					</div>
-					<div class="flex_start">
-						<p class="top_p1">卖出中订单数</p>
-						<p class="top_p2">{{ saleOrderNum }}</p>
-					</div>
-					<div class="flex_start">
-						<p class="top_p1">排单币</p>
-						<p class="top_p2">{{ scheduleMoney }}</p>
-					</div>
-				</div>
-				<div class="flex_clu_v">
-					<div class="flex_start">
-						<p class="top_p1">售出钱包</p>
-						<p class="top_p2">{{ salePrice }}</p>
-					</div>
-					<div class="flex_start">
-						<p class="top_p1">冻结中订单数</p>
-						<p class="top_p2">{{ freezeOrderNum }}</p>
-					</div>
-					<div class="flex_start">
-						<p class="top_p1">可卖出订单数</p>
-						<p class="top_p2">{{ cansaleOrder }}</p>
-					</div>
-					<div class="flex_start">
-						<p class="top_p1">直推收益</p>
-						<p class="top_p2">{{ scheduleProfit }}</p>
+					<div class="flex_between_v">
+						<div class="">
+							<p class="y_p3">10000000</p>
+							<p class="y_p4">购物积分</p>
+						</div>
+						<div class="y_texcen">
+							<p class="y_p3">5500</p>
+							<p class="y_p4">转出积分</p>
+						</div>
+						<div class="y_texrgh">
+							<p class="y_p3">500</p>
+							<p class="y_p4">期权</p>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="min_list">
-			<router-link to='/myteam' class="flex_between_v list_div">
+			<router-link to='/myteam' class="flex_between_v list_div border0 pad0">
 				<div class="flex_start_v">
-					<img src="@/assets/tdicon@2x.png"/>
-					<p class="list_p1">我的团队</p>
+					<img src="@/assets/tdicon@2x.png" style="width: .28rem; height: .34rem;"/>
+					<p class="list_p1">神农牧币包</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</router-link>
+		</div>
+		<div class="min_list">
 			<router-link to='/personal' class="flex_between_v list_div">
 				<div class="flex_start_v">
-					<img src="@/assets/gricon@2x.png"/>
-					<p class="list_p1">个人资料</p>
+					<img src="@/assets/icon_Shape@2x.png" style="width: .28rem; height: .34rem;"/>
+					<p class="list_p1">我的账单</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</router-link>
 			<router-link to='/wallet' class="flex_between_v list_div">
 				<div class="flex_start_v">
-					<img src="@/assets/qbicon@2x.png"/>
-					<p class="list_p1">钱包地址</p>
+					<img src="@/assets/icon_team@2x.png" style="width: .36rem; height: .34rem;"/>
+					<p class="list_p1">团队情况</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</router-link>
 			<router-link to='/fortune' class="flex_between_v list_div">
 				<div class="flex_start_v">
-					<img src="@/assets/fbicon@2x.png"/>
-					<p class="list_p1">汇币收益</p>
+					<img src="@/assets/icon_people@2x.png" style="width: .36rem; height: .34rem;"/>
+					<p class="list_p1">个人资料</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</router-link>
-			<router-link to='/myIntegral' class="flex_between_v list_div">
+			<router-link to='/myIntegral' class="flex_between_v list_div border0">
 				<div class="flex_start_v">
-					<img src="@/assets/zhicon@2x.png"/>
-					<p class="list_p1">账户托管</p>
+					<img src="@/assets/icon_shouhuo@2x.png" style="width: .36rem; height: .32rem;"/>
+					<p class="list_p1">收货地址</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</router-link>
-			<router-link to='/ordered' class="flex_between_v list_div">
+			<router-link to='/ordered' class="flex_between_v list_div matop16">
 				<div class="flex_start_v">
-					<img src="@/assets/yyicon@2x.png"/>
-					<p class="list_p1">预约交易</p>
+					<img src="@/assets/icon_phone@2x.png" style="width: .32rem; height: .32rem;"/>
+					<p class="list_p1">客服电话</p>
 				</div>
-				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
+				<p class="list_p1">400-1111-1111</p>
 			</router-link>
 			<div class="flex_between_v list_div" @click="pass">
 				<div class="flex_start_v">
-					<img src="@/assets/ejmmicon@2x.png"/>
-					<p class="list_p1">二级密码</p>
+					<img src="@/assets/icon_shezhi @2x.png" style="width: .36rem; height: .36rem;"/>
+					<p class="list_p1">设置</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</div>
-			<router-link to='/customer' class="flex_between_v list_div">
-				<div class="flex_start_v">
-					<img src="@/assets/kficon@2x.png"/>
-					<p class="list_p1">客服列表</p>
-				</div>
-				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
-			</router-link>
-			<router-link to='/membereg' class="flex_between_v list_div border0">
-				<div class="flex_start_v">
-					<img src="@/assets/hy.png"/>
-					<p class="list_p1">会员注册</p>
-				</div>
-				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
-			</router-link>
 		</div>
 	</div>
 </template>
@@ -187,20 +175,34 @@
 
 <style scoped>
 a{box-sizing: border-box;}
+.border0{border: 0 !important;}
+.pad0{padding: 0 !important;}
+.matop16{margin-top: .16rem;}
 .mine{position: relative;}
-.min_top{padding: .22rem .3rem;background: #FF6808;width: 100%;height: 2.7rem;color: #fff;display: flex;}
-.tx_img{width: .9rem;height: .9rem;margin-right: .24rem;}
-.top_tel{height: .9rem;}
+.min_top{background: #fff;width: 100%;color: #fff;display: flex;padding: 0 .3rem;margin-bottom: .16rem;}
+.tx_img{width: .8rem;height: .8rem;margin-right: .14rem;}
+.top_tel{height: .8rem;width: 100%; margin: .18rem 0;}
+.phone_top{font-size: .36rem; color: #222222;}
 .hy_img{width: .28rem;height: .28rem;}
+.star_img{width: .56rem;height: .56rem; margin-right: -.28rem;z-index: 9;}
+.star_p{background-image: linear-gradient(-135deg, #685B3E 100%, #232323 0%);border-radius: 30px;width: 1.76rem;height: .44rem;line-height: .44rem;text-align: center;font-size: .24rem;}
 .font12{font-size: .24rem;}
-.top_con{width: 100%;height: 3rem;background-image: linear-gradient(-269deg, #FDF3EB 0%, #FFF8F3 98%);border-radius: 20px;padding: .42rem .3rem;}
+.top_con{width: 100%;height: 100%;border-radius: 20px;background: url(../assets/bg_my@3x.png) 50% 0;background-size: 108% 108%; overflow: hidden;padding: .3rem .4rem;}
 .flex_clu_v{display: flex;flex-direction: column;justify-content: space-between;flex: 1;}
 .top_p1{font-size: .24rem;color: #666666;width: 1.7rem;}
 .top_p2{color: #222222;}
-.min_list{margin: 0 .3rem; background: #fff;border-radius: 20px;padding: 0 .3rem;margin-top: 1.8rem;margin-bottom: .2rem;}
-.list_div{height: .9rem; border-bottom: 2px solid #E5E5E5;}
+.min_list{margin-bottom: .2rem;}
+.list_div{height: .9rem;width: 100%;font-size: .3rem; border-bottom: 2px solid #E5E5E5;padding: 0 .3rem;background: #fff;}
 .list_p1{color: #666666;margin-left: .1rem;}
 .border0{border: 0;}
 .right_img{width: .4rem; height: .4rem;}
-.min_sec{padding: 0 .3rem;width: 100%; position: absolute;top: 1.26rem;}
+.min_sec{width: 100%;height: 4rem;}
+.con_d1{overflow: hidden;}
+.y_p1{width: 1.2rem;height: .6rem;border:1px solid #fff;text-align: center;line-height: .6rem;border-radius: .6rem;margin-left: .3rem;}
+.y_p2{font-size: .72rem;margin-bottom: .3rem;}
+.y_p3{font-size: .32rem;}
+.y_p4{font-size: .24rem;}
+.y_texcen{text-align: center;}
+.y_texrgh{text-align: right;}
+.marcon{margin-bottom: .28rem;}
 </style>
