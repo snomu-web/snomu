@@ -73,4 +73,11 @@ a{text-decoration: none;color: #4A4A4A;}
 .van-hairline--top-bottom::after{border-width:.02rem 0 !important;}
 .van-picker__cancel, .van-picker__confirm{padding: 0 .3rem !important;color: #000 !important;}
 .van-toast--text{min-width: 4.4rem !important;font-size: .28rem !important;padding: .24rem !important;}
+/*默认弹窗*/
+.van-dialog{font-size: .32rem;border-radius: .08rem;}
+.van-dialog__message{padding: .6rem .4rem;font-size: .4rem;color: #030303;}
+.van-button--large{height: 1rem;line-height: .96rem;border-radius:.06rem;}
+.van-button{font-size: .32rem;}
+.van-dialog__confirm, .van-dialog__confirm:active{color: #4A4A4A;}
+.van-button--default{border: 1px solid #e5e5e5 !important;}
 </style>

@@ -25,29 +25,29 @@
 					</div>
 					<p class="y_p2">20000</p>
 					<div class="flex_between_v marcon">
-						<div class="">
+						<div class="flex1">
 							<p class="y_p3">10000000</p>
 							<p class="y_p4">累计购买(元)</p>
 						</div>
-						<div class="y_texcen">
+						<div class="y_texcen flex1">
 							<p class="y_p3">5500</p>
 							<p class="y_p4">累计收益积分</p>
 						</div>
-						<div class="y_texrgh">
+						<div class="y_texrgh flex1">
 							<p class="y_p3">500</p>
 							<p class="y_p4">今日收益</p>
 						</div>
 					</div>
-					<div class="flex_between_v">
-						<div class="">
+					<div class="flex_between_v ">
+						<div class="flex1">
 							<p class="y_p3">10000000</p>
 							<p class="y_p4">购物积分</p>
 						</div>
-						<div class="y_texcen">
+						<div class="y_texcen flex1">
 							<p class="y_p3">5500</p>
 							<p class="y_p4">转出积分</p>
 						</div>
-						<div class="y_texrgh">
+						<div class="y_texrgh flex1">
 							<p class="y_p3">500</p>
 							<p class="y_p4">期权</p>
 						</div>
@@ -98,13 +98,13 @@
 				</div>
 				<p class="list_p1">400-1111-1111</p>
 			</router-link>
-			<div class="flex_between_v list_div" @click="pass">
+			<router-link to='/setmine' class="flex_between_v list_div">
 				<div class="flex_start_v">
 					<img src="@/assets/icon_shezhi @2x.png" style="width: .36rem; height: .36rem;"/>
 					<p class="list_p1">设置</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
-			</div>
+			</router-link>
 		</div>
 	</div>
 </template>
@@ -205,4 +205,5 @@ a{box-sizing: border-box;}
 .y_texcen{text-align: center;}
 .y_texrgh{text-align: right;}
 .marcon{margin-bottom: .28rem;}
+.flex1{flex: 1;}
 </style>
