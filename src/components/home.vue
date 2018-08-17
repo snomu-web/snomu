@@ -1,13 +1,33 @@
 <template>
 	<div class="home">
-		<van-nav-bar class='til' title="海汇"/>
-		<div class="heard">
-			<van-swipe :autoplay="3000">
-			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
-			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
-			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
-			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
-			</van-swipe>
+		<div class="operation">
+			<ul>
+				<li>
+					<img src="../../build/logo.png"/>
+					<p id="">
+						扫一下
+					</p>
+				</li>
+				<router-link to="transfer">
+					<li>
+						<img src="../../build/logo.png"/>
+						<p id="">
+							转账
+						</p>
+					</li>
+				</router-link>
+				<li>
+					<img src="../../build/logo.png"/>
+					<p id="">
+						收款
+					</p>
+				</li>
+			</ul>
+		</div>
+		<div class="notice">
+			<router-link to="/integral" >
+				<img src="@/assets/tgbanner@2x.png"/>
+			</router-link>
 		</div>
 		<div class="menu">
 			<ul>
@@ -113,45 +133,13 @@
 				</li>
 			</ul>
 		</div>
-		<div class="notice">
-			<img src="@/assets/tgbanner@2x.png"/>
-		</div>
-		<div class="integral">
-			<div class="integral-icont">
-				积分购
-			</div>
-			<ul>
-				<li>
-					<div class="integral-mairu">
-						<ul style="border-right: 2px solid #E5E5E5;" @click="linkmairu">
-							<li>
-								<p>买入商品</p>
-								<span>PURCHUSE</span>
-							</li>
-							<li>
-								<div class="integral-mairu-img">
-									<img src="@/assets/smr@2x.png"/>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</li>
-				<li>
-					<div class="integral-maichu">
-						<ul @click="linkmaichu">
-							<li>
-								<p>卖出产品</p>
-								<span>SELLOUT</span>
-							</li>
-							<li>
-								<div class="integral-maichu-img">
-									<img src="@/assets/smc@2x.png"/>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</li>
-			</ul>
+		<div class="heard">
+			<van-swipe :autoplay="3000">
+			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
+			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
+			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
+			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
+			</van-swipe>
 		</div>
 		<router-view></router-view>
 	</div>
@@ -180,6 +168,41 @@
 </script>
 
 <style scoped>
+	#app{
+		padding-top: -0.88rem!important;
+	}
+	.operation{
+		width: 100%;
+		height: 2.6rem;
+		
+		 background:linear-gradient(to right,#fd904a,#fd4553)
+	}
+	.operation ul{
+		width: 100%;
+		height: 100%;
+	}
+	.operation ul li{
+		float: left;
+		width: 33.3%;
+		height: 100%;
+		box-sizing: border-box;
+		border: 1px solid #FF6E07;
+		margin: 0 auto;
+	}
+	.operation li img{
+		width: 0.96rem;
+		height: 0.96rem;
+		display: block;
+		margin: 0 auto;
+		position: relative;
+		top: 0.6rem;
+	}
+	.operation p{
+		height: 0.76rem;
+		line-height:0.76rem;
+		margin-top:0.5rem;
+		text-align: center;
+	}
 	.heard{
 		height: 3.52rem;
 		width: 100%;
@@ -221,12 +244,17 @@
 	.notice{
 		height: 2rem;
 		width: 100%;
-		margin-top: 0.2rem;
 		box-sizing: border-box;
+		position: relative;
 	}
 	.notice img{
-		width: 100%;
-		height: 100%;
+		width: 6.9rem;
+		height: 1.4rem;
+		position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    margin-left: -3.45rem;
+	    margin-top: -0.7rem;
 	}
 	/*============积分购买===================*/
 	.integral{
