@@ -22,6 +22,9 @@ import Turnou from '@/components/turnou'
 import Explicit from '@/components/explicit'
 import Outye from '@/components/outye'
 import Outjf from '@/components/outjf'
+import Transfer from '@/components/transfer'
+import PackageDetails from '@/components/packageDetails'
+import TransferConfirm from '@/components/transferConfirm'
 
 Vue.use(Router)
 
@@ -29,11 +32,11 @@ const router = new Router({
   routes: [
   	{path: '/',name: 'login',component: Login,meta: {title: '登录'}},
     {path: '/regist',name: 'regist',component: Regist,meta: {title: '注册'}},
-    {path: '/index',name: 'index',component: Index,meta: {title: '海汇'}, children:[
-    	{path: '/home',name: 'home',component: Home, meta: {title: '海汇'}},
-    	{path: '/integral',name: 'integral',component: Integral, meta: {title: '海汇'}},
-    	{path: '/shopcar',name: 'shopcar',component: Shopcar, meta: {title: '海汇'}},
-    	{path: '/mine',name: 'mine',component: Mine, meta: {title: '海汇'}}
+    {path: '/index',name: 'index',component: Index,meta: {title: '神农牧'}, children:[
+    	{path: '/home',name: 'home',component: Home, meta: {title: '神农牧'}},
+    	{path: '/integral',name: 'integral',component: Integral, meta: {title: '神农牧'}},
+    	{path: '/shopcar',name: 'shopcar',component: Shopcar, meta: {title: '神农牧'}},
+    	{path: '/mine',name: 'mine',component: Mine, meta: {title: '神农牧'}}
     ]},
     {path: '/setmine',name: 'setmine',component: Setmine,meta: {title: '设置'}},
     {path: '/about',name: 'about',component: About,meta: {title: '关于'}},
@@ -50,6 +53,9 @@ const router = new Router({
     {path: '/explicit',name: 'explicit',component: Explicit,meta: {title: '转出明细'}},
     {path: '/outye',name: 'outye',component: Outye,meta: {title: '余额转出'}},
  		{path: '/outjf',name: 'outjf',component: Outjf,meta: {title: '积分转余额'}},
+    {path: '/transfer',name: 'transfer',component: Transfer,meta: {title: '转账'}},
+    {path: '/packageDetails',name: 'packageDetails',component: PackageDetails,meta: {title: ''}},
+    {path: '/transferConfirm',name: 'transferConfirm',component: TransferConfirm,meta: {title: ''}},
   ]
 })
 
