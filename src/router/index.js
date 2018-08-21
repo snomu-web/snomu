@@ -11,6 +11,17 @@ import Setmine from '@/components/setmine'
 import About from '@/components/about'
 import Revise from '@/components/revise'
 import Payment from '@/components/payment'
+import Addre from '@/components/addre'
+import Pushadd from '@/components/pushadd'
+import Peodata from '@/components/peodata'
+import Edit from '@/components/edit'
+import Team from '@/components/team'
+import Bill from '@/components/bill'
+import Detail from '@/components/detail'
+import Turnou from '@/components/turnou'
+import Explicit from '@/components/explicit'
+import Outye from '@/components/outye'
+import Outjf from '@/components/outjf'
 
 Vue.use(Router)
 
@@ -28,6 +39,17 @@ const router = new Router({
     {path: '/about',name: 'about',component: About,meta: {title: '关于'}},
     {path: '/revise',name: 'revise',component: Revise,meta: {title: '密码修改'}},
     {path: '/payment',name: 'payment',component: Payment,meta: {title: '支付密码'}},
+    {path: '/addre',name: 'addre',component: Addre,meta: {title: '收货地址'}},
+    {path: '/pushadd',name: 'pushadd',component: Pushadd,meta: {title: '添加新地址'}},
+    {path: '/peodata',name: 'peodata',component: Peodata,meta: {title: '个人资料'}},
+    {path: '/edit',name: 'edit',component: Edit,meta: {title: '修改资料'}},
+    {path: '/team',name: 'team',component: Team,meta: {title: '团队情况'}},
+    {path: '/bill',name: 'bill',component: Bill,meta: {title: '我的账单'}},
+    {path: '/detail',name: 'detail',component: Detail,meta: {title: '账单明细'}},
+    {path: '/turnou',name: 'turnou',component: Turnou,meta: {title: '转出'}},
+    {path: '/explicit',name: 'explicit',component: Explicit,meta: {title: '转出明细'}},
+    {path: '/outye',name: 'outye',component: Outye,meta: {title: '余额转出'}},
+ 		{path: '/outjf',name: 'outjf',component: Outjf,meta: {title: '积分转余额'}},
   ]
 })
 
