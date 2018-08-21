@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
 import Regist from '@/components/regist'
+import Forget from '@/components/forget'
+import Change from '@/components/change'
 import Index from '@/components/index'
 import Home from '@/components/home'
 import Integral from '@/components/integral'
@@ -32,6 +34,8 @@ const router = new Router({
   routes: [
   	{path: '/',name: 'login',component: Login,meta: {title: '登录'}},
     {path: '/regist',name: 'regist',component: Regist,meta: {title: '注册'}},
+    {path: '/forget',name: 'forget',component: Forget,meta: {title: '忘记密码'}},
+    {path: '/change',name: 'change',component: Change,meta: {title: '忘记密码'}},
     {path: '/index',name: 'index',component: Index,meta: {title: '神农牧'}, children:[
     	{path: '/home',name: 'home',component: Home, meta: {title: '神农牧'}},
     	{path: '/integral',name: 'integral',component: Integral, meta: {title: '神农牧'}},

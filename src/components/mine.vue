@@ -1,6 +1,6 @@
 <template>
 	<div class="mine">
-		<van-nav-bar class='til' title="海汇"/>
+		<van-nav-bar class='til' title="神农牧"/>
 		<div class="min_top flex_start">
 			<div class="flex_between_v top_tel">
 				<div class="flex_between_v">
