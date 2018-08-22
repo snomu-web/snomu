@@ -131,25 +131,4 @@ a{text-decoration: none;color: #4A4A4A;}
 .team .van-tabs__wrap--scrollable .van-tabs__nav{}
 .team .van-tab{color: #222222;font-size: .32rem;}
 .team .van-tab--active{color: #222222;font-size: .4rem;border-left: .02rem solid #EEEEEE;border-right: .02rem solid #EEEEEE;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
 </style>
