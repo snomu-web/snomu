@@ -1,6 +1,6 @@
 <template>
 	<div class="mine">
-		<van-nav-bar class='til' title="海汇"/>
+		<van-nav-bar class='til' title="神农牧"/>
 		<div class="min_top flex_start">
 			<div class="flex_between_v top_tel">
 				<div class="flex_between_v">
@@ -18,36 +18,36 @@
 				<div class="top_con">
 					<div class="flex_between_v con_d1">
 						<p class="">余额（元）</p>
-						<div class="flex_between_v">
+						<router-link to='/turnou' class="flex_between_v">
 							<img src="@/assets/btn_chongzhi@3x.png" style="width: 1.6rem; height: .6rem;"/>
 							<p class="y_p1">转出</p>								
-						</div>
+						</router-link>
 					</div>
 					<p class="y_p2">20000</p>
 					<div class="flex_between_v marcon">
-						<div class="">
+						<div class="flex1">
 							<p class="y_p3">10000000</p>
 							<p class="y_p4">累计购买(元)</p>
 						</div>
-						<div class="y_texcen">
+						<div class="y_texcen flex1">
 							<p class="y_p3">5500</p>
 							<p class="y_p4">累计收益积分</p>
 						</div>
-						<div class="y_texrgh">
+						<div class="y_texrgh flex1">
 							<p class="y_p3">500</p>
 							<p class="y_p4">今日收益</p>
 						</div>
 					</div>
-					<div class="flex_between_v">
-						<div class="">
+					<div class="flex_between_v ">
+						<div class="flex1">
 							<p class="y_p3">10000000</p>
 							<p class="y_p4">购物积分</p>
 						</div>
-						<div class="y_texcen">
+						<div class="y_texcen flex1">
 							<p class="y_p3">5500</p>
 							<p class="y_p4">转出积分</p>
 						</div>
-						<div class="y_texrgh">
+						<div class="y_texrgh flex1">
 							<p class="y_p3">500</p>
 							<p class="y_p4">期权</p>
 						</div>
@@ -63,49 +63,57 @@
 			</router-link>
 		</div>
 		<div class="min_list">
-			<router-link to='/personal' class="flex_between_v list_div">
+			<router-link to='/bill' class="flex_between_v list_div">
 				<div class="flex_start_v">
 					<img src="@/assets/icon_Shape@2x.png" style="width: .28rem; height: .34rem;"/>
 					<p class="list_p1">我的账单</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</router-link>
-			<router-link to='/wallet' class="flex_between_v list_div">
+			<router-link to='/team' class="flex_between_v list_div">
 				<div class="flex_start_v">
 					<img src="@/assets/icon_team@2x.png" style="width: .36rem; height: .34rem;"/>
 					<p class="list_p1">团队情况</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</router-link>
-			<router-link to='/fortune' class="flex_between_v list_div">
+			<router-link to='/peodata' class="flex_between_v list_div">
 				<div class="flex_start_v">
 					<img src="@/assets/icon_people@2x.png" style="width: .36rem; height: .34rem;"/>
 					<p class="list_p1">个人资料</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</router-link>
-			<router-link to='/myIntegral' class="flex_between_v list_div border0">
+			<router-link to='/addre' class="flex_between_v list_div border0">
 				<div class="flex_start_v">
 					<img src="@/assets/icon_shouhuo@2x.png" style="width: .36rem; height: .32rem;"/>
 					<p class="list_p1">收货地址</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
 			</router-link>
-			<router-link to='/ordered' class="flex_between_v list_div matop16">
+			<div class="flex_between_v list_div matop16" @click="show = true">
 				<div class="flex_start_v">
 					<img src="@/assets/icon_phone@2x.png" style="width: .32rem; height: .32rem;"/>
 					<p class="list_p1">客服电话</p>
 				</div>
 				<p class="list_p1">400-1111-1111</p>
-			</router-link>
-			<div class="flex_between_v list_div" @click="pass">
+			</div>
+			<router-link to='/setmine' class="flex_between_v list_div">
 				<div class="flex_start_v">
 					<img src="@/assets/icon_shezhi @2x.png" style="width: .36rem; height: .36rem;"/>
 					<p class="list_p1">设置</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
-			</div>
+			</router-link>
 		</div>
+		<!--电话弹出框-->
+		<van-popup v-model="show">
+			<p class="pop_p1">400-1111-1111</p>
+			<div class="pop_bom">
+				<p class="pop_p2" @click="show = false">取消</p>
+				<a href="tel:400-1111-1111" class="pop_p2">呼叫</a>
+			</div>
+		</van-popup>
 	</div>
 </template>
 
@@ -126,6 +134,7 @@
 				scheduleMoney: 0,					//排单币
 				scheduleProfit: 0,					//直推收益
 				userGradeName: 0,					//用户会员名称
+				show: false
 			}
 		},
 		created () {
@@ -198,11 +207,19 @@ a{box-sizing: border-box;}
 .right_img{width: .4rem; height: .4rem;}
 .min_sec{width: 100%;height: 4rem;}
 .con_d1{overflow: hidden;}
-.y_p1{width: 1.2rem;height: .6rem;border:1px solid #fff;text-align: center;line-height: .6rem;border-radius: .6rem;margin-left: .3rem;}
+.y_p1{width: 1.2rem;height: .6rem;border:1px solid #fff;text-align: center;line-height: .6rem;border-radius: .6rem;margin-left: .3rem;color: #fff;}
 .y_p2{font-size: .72rem;margin-bottom: .3rem;}
 .y_p3{font-size: .32rem;}
 .y_p4{font-size: .24rem;}
 .y_texcen{text-align: center;}
 .y_texrgh{text-align: right;}
 .marcon{margin-bottom: .28rem;}
+.flex1{flex: 1;}
+/*弹窗*/
+.van-popup{width: 6.34rem;height: 2.92rem; border-radius: 12px; text-align: center;border-radius: 24px;color: #222222;}
+.pop_bom{position: absolute;bottom: 0;width: 100%;display: flex;height: 1rem;line-height: 1rem;border-top: 2px solid #E5E5E5;}
+.pop_p1{margin: .76rem 0 .58rem 0;font-size: .44rem;color: #030303;}
+.pop_p2{flex: 1;text-align: center;color: #4A4A4A;font-size: .32rem;}
+.pop_bom p{border-right: 2px solid #E5E5E5;}
+/*弹窗结束*/
 </style>

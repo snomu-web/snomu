@@ -55,17 +55,17 @@ a{text-decoration: none;color: #4A4A4A;}
 .van-radio .van-icon-checked{color: #FF6A08;}
 .buyinDetail .van-cell{padding:.26rem .3rem;font-size:.28rem;color:#222222;border:0;line-height: normal;}
 .buyinDetail .van-cell__value--alone{color: #666666;}
-/*标签样式*/
-.van-tabs--line{padding-top: .88rem;width: 100%;}
-.van-tabs--line .van-tabs__wrap{height: .88rem;}
-.van-tabs__wrap--scrollable .van-tab{flex: 0 0 30%;}
-.van-tab{opacity: 0.8;}
-.van-tab{font-size:.28rem;line-height:.88rem;}
 /*卖出列表单选*/
 .saleorder .van-tabs{position: fixed;top: .88rem;z-index: 5;}
 .saleorder .van-radio{background: #fff;margin-top: .2rem;padding: 0 .3rem;position: relative;color: #999999;font-size: .24rem;}
 .saleorder .van-radio__label{width: 100%;margin-left: 0;line-height: normal;}
 .saleorder .van-radio__input{position: absolute;top: .15rem;left: .3rem;}
+/*地址页单选*/
+.addre .van-radio__input{height: .4rem;margin-left: .3rem;position: absolute;bottom: .18rem;}
+.addre .van-radio .van-icon{font-size: .38rem;}
+.addre .van-radio .van-icon-checked{color: #FF5651;}
+.addre .van-radio__label{width: 100% !important;line-height: normal;}
+.addre .van-radio{overflow: inherit;}
 /*选择器*/
 .van-picker-column li{padding: 0 .1rem !important;}
 .van-picker-column{font-size: .4rem !important;}
@@ -73,6 +73,7 @@ a{text-decoration: none;color: #4A4A4A;}
 .van-hairline--top-bottom::after{border-width:.02rem 0 !important;}
 .van-picker__cancel, .van-picker__confirm{padding: 0 .3rem !important;color: #000 !important;}
 .van-toast--text{min-width: 4.4rem !important;font-size: .28rem !important;padding: .24rem !important;}
+
 /*步进器组件*/
 .van-stepper__minus, .van-stepper__plus{
 	width: 0.48rem!important;
@@ -111,4 +112,44 @@ a{text-decoration: none;color: #4A4A4A;}
 	font-size: 0.24rem;
 	line-height: 0.32rem;
 }
+
+/*默认弹窗*/
+.van-dialog{font-size: .32rem;border-radius: .08rem;}
+.van-dialog__message{padding: .6rem .4rem;font-size: .4rem;color: #030303;}
+.van-button--large{height: 1rem;line-height: .96rem;border-radius:.06rem;}
+.van-button{font-size: .32rem;}
+.van-dialog__confirm, .van-dialog__confirm:active{color: #4A4A4A;}
+.van-button--default{border: 1px solid #e5e5e5 !important;}
+/*标签样式*/
+.van-tabs--line{height: .88rem;width: 100%;}
+.van-tabs--line .van-tabs__wrap{height: .88rem;}
+.van-tabs__wrap--scrollable .van-tab{flex: 0 0 33.4%;}
+.van-tab{opacity: 0.8;}
+.van-tab{font-size:.28rem;line-height:.88rem;}
+.top_tab .van-hairline--top-bottom::after{border: 0;}
+.team .van-tabs__line{height: 0 !important;}
+.team .van-tabs__wrap--scrollable .van-tabs__nav{}
+.team .van-tab{color: #222222;font-size: .32rem;}
+.team .van-tab--active{color: #222222;font-size: .4rem;border-left: .02rem solid #EEEEEE;border-right: .02rem solid #EEEEEE;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
 </style>
