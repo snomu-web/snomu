@@ -1,9 +1,9 @@
 <template>
 	<div class="shopcar">
 		<van-nav-bar
-		  title="购物车"
+		  title="我的订单"
 		  left-text="返回"
-		  right-text="我的订单"
+		  right-text="退货单"
 		  left-arrow
 		  @click-left="onClickLeft"
 		  @click-right="onClickRight"
@@ -13,23 +13,6 @@
 			<img class="shopcar-no-img" src="@/assets/zwpic@2x.png"/>
 			<p>您还未在平台购买过商品～</p>
 		</div>-->
-		<div class="dizhi">
-			<p class="dizhi-one">配送信息:</p>
-			<p class="dizhi-gr">
-				<span id="" class="dizhi-gr-line dizhi-gr-name">
-					<img src="../assets/Combined Shape.png"/>
-					张新发
-				</span>
-				<span id="" class="dizhi-gr-line dizhi-gr-tel">
-					<img src="../assets/Combined Shape.png"/>
-					15789654
-				</span>
-				<span id="" class="dizhi-gr-line dizhi-gr-next">
-					<img src="../assets/bom_btn_in@3x.png"/>
-				</span>
-			</p>
-			<p class="dizhi-sh">收货地址:sfsdf死哦放肆地</p>
-		</div>
 		<div class="commodity">
 			<div class="commodity-name">
 				<van-checkbox v-model="danChecked">卫龙辣条</van-checkbox><span class="delete">删除</span>

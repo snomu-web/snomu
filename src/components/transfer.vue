@@ -6,13 +6,11 @@
     			对方账户
     		</div>
     		<input class="adverse" placeholder="请输入您要转入的手机号">
-    			
-    		
     	</div>
     	<div class="hint">
     		温馨提示：请确认待转入账户（手机号）的准确性，完成转账将无法退
     	</div>
-    	<button>下一步</button>
+    	<button @click="next()">下一步</button>
 	</div>
 </template>
 <script>
@@ -33,6 +31,9 @@ export default {
     onClickLeft() {
       this.$router.go(-1)
     },
+    next(){
+    	this.$router.push({path:'/transferConfirm'})
+    }
   }
 }
 </script>
@@ -59,9 +60,9 @@ export default {
 	color: #9E9E9E;
 }
 .hint{
-	font-size: 26px;
+	font-size: 0.26rem;
 	color: #777777;
-	line-height: 40px;
+	line-height: 0.4rem;
 	box-sizing: border-box;
 	margin: 0 48px;
 	display: -webkit-box;
@@ -77,7 +78,7 @@ button{
 	margin-top: 94px;
 	display: block;
 	border: none;
-	font-size: 36px;
+	font-size: 0.36rem;
 	color: #FFFFFF;
 	text-align: center;
 	background:linear-gradient(to right,#fd904a,#fd4553)

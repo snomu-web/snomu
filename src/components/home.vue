@@ -2,22 +2,22 @@
 	<div class="home">
 		<div class="operation">
 			<ul>
-				<li>
-					<img src="../../build/logo.png"/>
+				<li @click="unopened">
+					<img src="@/assets/icon_saoyisao@2x.png"/>
 					<p id="">
 						扫一下
 					</p>
 				</li>
 				<router-link to="transfer">
 					<li>
-						<img src="../../build/logo.png"/>
+						<img src="@/assets/icon_zhuangzhang@2x.png"/>
 						<p id="">
 							转账
 						</p>
 					</li>
 				</router-link>
 				<li>
-					<img src="../../build/logo.png"/>
+					<img src="@/assets/icon_shoukuan@2x.png"/>
 					<p id="">
 						收款
 					</p>
@@ -42,7 +42,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/onlineStore'>
 						<div class="menu-img">
 							<img src="@/assets/xsicon@2x.png"/>
 						</div>
@@ -141,6 +141,12 @@
 			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
 			</van-swipe>
 		</div>
+		<van-popup v-model="hintshow" :overlay="true">
+		  <div class="result-box">
+		  	<p class="resule-msg">该功能暂未开放</p>
+		  	<div class="guanbi" @click="guanbi">确认</div>
+		  </div>
+		</van-popup>
 		<router-view></router-view>
 	</div>
 </template>
@@ -150,6 +156,7 @@
 		name:'home',
 		data() {
 		    return {
+		    	hintshow:false
 //		      images: [];
     		}
   		},
@@ -162,7 +169,14 @@
     		},
     		linkmaichu () {
     			this.$router.push({path:'/integerSaleMain'})
-    		}
+    		},
+//  		未开放提示
+    		unopened(){
+    			this.hintshow = true
+    		},
+    		guanbi(){
+		   		this.hintshow = false
+		   	}
   		}
 	})
 </script>
@@ -362,5 +376,24 @@
 	.swip_img{
 		width: 100%;
 		height: 100%;
+	}
+	/*未开启功能弹窗提示*/
+	.result-box{
+		width: 6.1rem;
+		height: 3rem;
+		padding-top: 0.5rem;
+	}
+	.resule-msg{
+		height: 1rem;line-height: 1rem;text-align: center;
+		font-size: 0.36rem;
+		color: #000000;
+	}
+	.guanbi{
+		height: 1.2rem;
+		line-height: 1.2rem;
+		color: #777777;
+		font-size: 0.36rem;
+		text-align: center;
+		border-top: 2px solid #EEEEEE;
 	}
 </style>

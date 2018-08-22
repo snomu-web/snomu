@@ -73,4 +73,42 @@ a{text-decoration: none;color: #4A4A4A;}
 .van-hairline--top-bottom::after{border-width:.02rem 0 !important;}
 .van-picker__cancel, .van-picker__confirm{padding: 0 .3rem !important;color: #000 !important;}
 .van-toast--text{min-width: 4.4rem !important;font-size: .28rem !important;padding: .24rem !important;}
+/*步进器组件*/
+.van-stepper__minus, .van-stepper__plus{
+	width: 0.48rem!important;
+	height: 0.48rem!important;
+}
+.van-stepper__input{
+	width: 0.8rem!important;
+	height: 0.48rem!important;
+	font-size: 0.28rem!important;
+}
+.van-stepper{
+	width: 1.8rem!important;
+	height: 0.48rem!important;
+}
+/*购物车结算组件*/
+.van-submit-bar{
+	bottom: 1rem;
+	padding: 0 0.2rem;
+}
+.van-submit-bar__bar{
+	height: 1.2rem;
+	font-size: 0.28rem;
+}
+.van-submit-bar__price-decimal{
+	font-size: 0.28rem;
+}
+.van-submit-bar .van-button{
+	width: 2rem;
+	height: 0.88rem;
+	border-radius: 100px;
+	font-size: 0.32rem;
+}
+.van-checkbox__icon .van-icon{
+	width: 0.32rem;
+	height: 0.32rem;
+	font-size: 0.24rem;
+	line-height: 0.32rem;
+}
 </style>
