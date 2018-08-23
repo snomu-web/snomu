@@ -229,27 +229,35 @@
 		    onSubmit () {
 		    	let that = this
 		    	let order = {}
+		    	let orderDetails = []
 		    	for (let i = 0; i < that.result.length; i++) {
 		    		that.payPrice += that.result[i].amount * that.result[i].price
 		    		that.postage += that.result[i].amount * that.result[i].freightCharge
 		    		that.cartId.push(that.result[i].id)
-		    		order['itemId['+i+']'] = that.result[i].amount
+		    		let orderDetail=new Object()
+		    		orderDetail.itemId=that.result[i].amount
+		    		orderDetail.quantity=that.result[i].amount
+		    		orderDetail.payPrice=that.result[i].amount
+		    		orderDetail.postage=that.result[i].amount
+		    		orderDetails.push(orderDetail)
 		    	}
-		    	console.log(order)
 		    	that.cartId.join(',')
+		    	let jsonData={
+		        	userId: localStorage.getItem('userId'),
+		        	name: that.name,
+		        	cellphone: that.cellphone,
+		        	address: that.address,
+		        	payPrice: that.payPrice,
+		        	postage: that.postage,
+		        	payPwd: that.payPwd
+			    }
+		    	for (var i = 0; i < orderDetails.length; i++) {
+		    		jsonData["orderDetails["+i+"].itemId"] = orderDetails[i].itemId
+		    	}
 				that.$axios({
 			        url: '/api/app/orders/submitOrder',
 			        method: 'POST',
-			        data: qs.stringify({
-			        	userId: localStorage.getItem('userId'),
-			        	name: that.name,
-			        	cellphone: that.cellphone,
-			        	address: that.address,
-			        	payPrice: that.payPrice,
-			        	postage: that.postage,
-			        	payPwd: that.payPwd,
-			        	orderDetails: order
-			        })
+			        data: qs.stringify(jsonData)
 			    }).then(res => {
 			    	if(res.data.code == 0){
 			    		that.getShop ()
