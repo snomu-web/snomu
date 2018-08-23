@@ -2,17 +2,17 @@
 	<div class="addre">
 		<van-nav-bar title="收货地址" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<van-radio-group v-model="radio" class='mabom18'>
-		    <van-radio :name="item" class='top_ul' v-for='item in 5' :key='item'>
+		    <van-radio :name="item.id" class='top_ul' v-for='(item, index) in list' :key='index'>
 		  		<div class="top_li2">
-		  			<p class="top_p1">张山 13912342313</p>
-		  			<p class="top_p2 maboto">浙江省杭州市江干区</p>
-		  			<p class="top_p2">幸福南路1288号瑞丰大厦2幢2118号</p>
+		  			<p class="top_p1">{{ item.name }} {{ item.phone }}</p>
+		  			<p class="top_p2 maboto">{{ item.province }}{{ item.city }}{{ item.region }}</p>
+		  			<p class="top_p2">{{ item.shippingAddress }}</p>
 		  		</div>
 		  		<div class="top_li1 flex_between_v">
-		  			<p>默认地址{{item}}</p>
+		  			<p @click.stop="moren(item.id)">默认地址</p>
 		  			<div class="flex_between_v">
-		  				<p class="flex_between_v" @click="editLink"><img class="bianji" src="@/assets/btn_bianji@2x.png"/><span class="top_span">编辑</span></p>
-		  				<p class="flex_between_v malef6" @click="delshow = true"><img class="shanchu" src="@/assets/btn_shanchu@2x.png"/><span class="top_span">删除</span></p>
+		  				<p class="flex_between_v" @click="editLink(JSON.stringify(item))"><img class="bianji" src="@/assets/btn_bianji@2x.png"/><span class="top_span">编辑</span></p>
+		  				<p class="flex_between_v malef6" @click.stop="del(item,$event)"><img class="shanchu" src="@/assets/btn_shanchu@2x.png"/><span class="top_span">删除</span></p>
 		  			</div>
 		  		</div>
 		    </van-radio>
@@ -27,29 +27,103 @@
 				<p class="pop_p1">执行删除后将无法还原，请<br/>您谨慎删除～</p>
 			<div class="flex_start_v">
 				<p class="pop_p2" @click="delshow = false">取消</p>
-				<p class="pop_p3">确认</p>
+				<p class="pop_p3" @click='deladd'>确认</p>
 			</div>
 		</van-popup>
 	</div>
 </template>
 
 <script>
+	import { Toast } from 'vant'
+	import qs from 'qs'
 	export default({
 		name: 'addre',
 		data () {
 			return {
-				radio: '1',					//选中项
-				delshow: false
+				list: [],					//地址列表
+				radio: '',					//选中项
+				delshow: false,				//弹窗
+				addId: ''					//地址id
 			}
+		},
+		created () {
+			this.get()
 		},
 		methods: {
 			//返回
 		    onClickLeft () {
 		        this.$router.push({path:'/mine'})
 	        },
-			editLink () {
-				this.$router.push({path:'/addedit'})
-			}
+	        //编辑
+			editLink (e) {
+				this.$router.push({path:'/addedit',query:{'item': e}})
+			},
+			//获取地址列表
+			get () {
+	       		let that = this
+				that.$axios({
+			        url: '/api/app/shopAddress/queryAddress',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	userId: localStorage.getItem('userId')
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		that.list = res.data.data
+			    		for (let i = 0; i < res.data.data.length; i++) {
+			    			if (res.data.data[i].isDefault == 1) {
+			    				that.radio = res.data.data[i].id
+			    				return false
+			    			}
+			    		}
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+	       	},
+	       	//设置默认地址
+	       	moren (e) {
+	       		let that = this
+				that.$axios({
+			        url: '/api/app/shopAddress/onlyAddress',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	userId: localStorage.getItem('userId'),
+			        	id: e
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){			    		
+			    		Toast(res.data.msg)
+			    		that.radio = e
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+	       	},
+	       	//删除地址弹窗
+	       	del (e) {
+	       		
+	       		this.delshow = true
+	       		this.addId = e.id
+	       	},
+	       	//删除确认
+	       	deladd () {
+	       		let that = this
+				that.$axios({
+			        url: '/api/app/shopAddress/deleteAddress',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	id: that.addId
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		this.delshow = false
+			    		that.get()
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+	       	}
 		}
 	})
 </script>

@@ -80,6 +80,9 @@ a{text-decoration: none;color: #4A4A4A;}
 .van-button{font-size: .32rem;}
 .van-dialog__confirm, .van-dialog__confirm:active{color: #4A4A4A;}
 .van-button--default{border: 1px solid #e5e5e5 !important;}
+.van-loading--black{width: .4rem;height: .4rem;}
+.van-field .van-cell__title{max-width: 1.8rem;}
+.outjf .van-cell, .outye .van-cell{padding: .8rem .3rem;font-size: .36rem;display: flex;align-items: center;}
 /*标签样式*/
 .van-tabs--line{height: .88rem;width: 100%;}
 .van-tabs--line .van-tabs__wrap{height: .88rem;}

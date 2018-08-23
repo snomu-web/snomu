@@ -22,6 +22,8 @@
 </template>
 
 <script>
+	import { Toast } from 'vant'
+	import qs from 'qs'
 	export default {
 		name: 'setmine',
 		data () {
@@ -33,17 +35,31 @@
 			//返回
 		    onClickLeft () {
 		        this.$router.push({path:'/mine'})
-	       },
-	       //退出弹窗
-	       exidpop () {
+	       	},
+	       	//退出弹窗
+	       	exidpop () {
+	       		let that = this
 	       		this.$dialog.alert({
 			  		message: '您是否要退出登录？',
 			  		showCancelButton: true,
 			  		closeOnClickOverlay: true,
 				}).then(() => {
-			  		
+			  		that.$axios({
+			      	  	url: '/api/app/user/logout',
+			       		method: 'POST',
+			        	data: qs.stringify({
+			          		userName: localStorage.getItem('userName')
+			        	})
+		      		}).then(res => {
+				        if (res.data.code == 0) {
+				        	localStorage.clear()
+				          	that.$router.push({path:'/'})
+				        } else {
+				          	Toast(res.data.msg)
+				        }
+			      	})
 				})
-	       }
+	       	}
 	    },
 	}
 </script>

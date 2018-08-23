@@ -3,14 +3,14 @@
 		<van-nav-bar title="忘记密码" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="con">
 			<div class="int_fle">
-				<img src="@/assets/icon_mima@3x.png"/>
+				<img src="@/assets/icon_mima@2x.png"/>
 				<input type="password" v-if="showA == 1" v-model="passwordA" placeholder="请重新设置您的6-16位密码"/>
 				<input type="text" v-if="showA == 0" v-model="passwordA" placeholder="请重新设置您的6-16位密码"/>
 				<img src="@/assets/icon_closeeyes@2x.png" v-if="showA == 1" @click="showA = 0"/>
 				<img src="@/assets/icon_openeyes@2x.png" v-if="showA == 0" @click="showA = 1"/>
 			</div>
 			<div class="int_fle">
-				<img src="@/assets/icon_mima@3x.png"/>
+				<img src="@/assets/icon_mima@2x.png"/>
 				<input type="password" v-if="showB == 1" v-model="passwordB" placeholder="请再次输入您的密码"/>
 				<input type="text" v-if="showB == 0" v-model="passwordB" placeholder="请再次输入您的密码"/>
 				<img src="@/assets/icon_closeeyes@2x.png" v-if="showB == 1" @click="showB = 0"/>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+	import { Toast } from 'vant'
+	import qs from 'qs'
 	export default{
 		name: 'change',
 		data () {
@@ -45,20 +47,24 @@
 		    //保存
 		    logClick () {
 		    	let that = this
+		    	if ( that.passwordA.length < 6 || that.passwordA.length > 16) {
+		    		Toast('请设置6-16位密码')
+		    		return false
+		    	}
+		    	if (that.passwordA != that.passwordB) {
+		    		Toast('两次密码输入不一致')
+		    		return false
+		    	}
 		        that.$axios({
-		      	  	url: '/api/app/appUser/login',
+		      	  	url: '/api/app/user/updatePwd',
 		       		method: 'POST',
 		        	data: qs.stringify({
-		          		phone: that.phone,
-		          		verificationCode: that.code
+		          		userName: localStorage.getItem('userName'),
+		          		pwd: that.passwordA
 		        	})
 		      	}).then(res => {
 			        if (res.data.code == 0) {
 			        	Toast(res.data.msg)
-			        	localStorage.setItem('userId',res.data.data.userId)
-			        	localStorage.setItem('myId',res.data.data.userId)
-			        	localStorage.setItem('myPhone',that.phone)
-			        	localStorage.setItem('isTrust',res.data.data.isTrust)
 			        	that.$router.push({path:'/home'})
 			        } else {
 			          	Toast(res.data.msg)

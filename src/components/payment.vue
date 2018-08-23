@@ -3,13 +3,13 @@
 		<van-nav-bar title="支付密码" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="box">
 			<div class="flex_between_v">
-				<input type="text" class="code_int" v-model="code" placeholder="请输入验证码"/>
+				<input type="text" class="code_int" v-model="code" placeholder="请输您收到的验证码"/>
 	            <p class="getcode" v-if="codeshow" @click="getCode">获取验证码</p>
 	            <p class="getcode opt4" v-if="!codeshow">{{count}}s后获取</p>
 			</div>
 			<div class="int_div flex_between_v">
-				<input type="text" v-model="passA" placeholder="请重新设置您的6-16位密码" v-if="showA"/>
-				<input type="password" v-model="passA" placeholder="请重新设置您的6-16位密码" v-if="!showA"/>
+				<input type="text" v-model="passA" placeholder="请输入您想设置的支付密码" v-if="showA"/>
+				<input type="password" v-model="passA" placeholder="请输入您想设置的支付密码" v-if="!showA"/>
 				<img class="close" src="@/assets/icon_closeeyes@2x.png" v-if="!showA" @click="showA = true"/>
 				<img class="open" src="@/assets/icon_openeyes@2x.png" v-if="showA" @click="showA = false"/>
 			</div>
@@ -52,10 +52,10 @@
 		    getCode () {
 		        let that = this
 		        that.$axios({
-		      	  	url: '/api/app/appUser/getVerificationCodeByUserId',
+		      	  	url: '/api/app/yzm/yzm',
 		       		method: 'POST',
 		        	data: qs.stringify({
-		          		userId: localStorage.getItem('userId')
+		          		phone: localStorage.getItem('userName')
 		        	})
 		      	}).then(res => {
 			        if (res.data.code == 0) {
@@ -87,15 +87,17 @@
 		    	let that = this
 		    	let lengthA = that.passA.length
 		    	let lengthB = that.passB.length
-		    	if ((lengthA < 6 || lengthA >16) || (lengthB < 6 || lengthB >16)) {
-	       			Toast('请输入6-16位密码')
+		    	if (that.passA != that.passB) {
+	       			Toast('两次输入密码不一致')
 	       			return false
 	       		}
 		        that.$axios({
-		      	  	url: '/api/app/myTeamInfo/getMyTeamInfo',
+		      	  	url: '/api/app/user/updatePayPwd',
 		       		method: 'POST',
 		        	data: qs.stringify({
-		          		userId:localStorage.getItem('userId')
+		          		userName: localStorage.getItem('userName'),
+		          		payPwd: that.passA,
+		          		code: that.code
 		        	})
 		      	}).then(res => {
 			        if (res.data.code == 0) {
@@ -110,6 +112,7 @@
 </script>
 
 <style scoped>
+.opt4{opacity: .4;}
 .payment{height: 100%;background: #fff;}
 .box{margin: 0 .5rem;overflow: hidden;padding-top:.2rem;}
 .code_int{border-radius: .44rem;border: 2px solid #D8D8D8;padding: .22rem .4rem;margin-right:.2rem; height: .88rem;height: .88rem;line-height: .88rem;box-sizing: border-box;}

@@ -3,8 +3,8 @@
 		<van-nav-bar title="密码修改" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="box">			
 			<div class="int_div flex_between_v">
-				<input type="text" v-model="passA" placeholder="请输入您想设置的支付密码" v-if="showA"/>
-				<input type="password" v-model="passA" placeholder="请输入您想设置的支付密码" v-if="!showA"/>
+				<input type="text" v-model="passA" placeholder="请重新设置您的6-16位密码" v-if="showA"/>
+				<input type="password" v-model="passA" placeholder="请重新设置您的6-16位密码" v-if="!showA"/>
 				<img class="close" src="@/assets/icon_closeeyes@2x.png" v-if="!showA" @click="showA = true"/>
 				<img class="open" src="@/assets/icon_openeyes@2x.png" v-if="showA" @click="showA = false"/>
 			</div>
@@ -48,15 +48,20 @@
 	       			Toast('请输入6-16位密码')
 	       			return false
 	       		}
+		    	if (that.passA != that.passB) {
+	       			Toast('两次输入密码不一致')
+	       			return false
+	       		}
 		        that.$axios({
-		      	  	url: '/api/app/myTeamInfo/getMyTeamInfo',
+		      	  	url: '/api/app/user/updatePwd',
 		       		method: 'POST',
 		        	data: qs.stringify({
-		          		userId:localStorage.getItem('userId')
+		          		userName: localStorage.getItem('userName'),
+		          		pwd: that.passA
 		        	})
 		      	}).then(res => {
 			        if (res.data.code == 0) {
-			        	that.activateSum = res.data.data.activateSum
+			        	Toast(res.data.msg)
 			        } else {
 			          	Toast(res.data.msg)
 			        }

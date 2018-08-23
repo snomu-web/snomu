@@ -3,26 +3,26 @@
 		<van-nav-bar title="转出明细" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="box">
 			<div class="top">
-				流水号：152445120733
+				流水号：{{ serialNum }}
 			</div>
 			<div class="con">
 				<div class="flex_between_v">
 					<p class="con_p1">创建时间：</p>
-					<p class="con_p2">04.23  18:10</p>
+					<p class="con_p2">{{ createTime }}</p>
 				</div>
 				<div class="flex_between_v">
 					<p class="con_p1">处理时间：</p>
-					<p class="con_p2">04.23  18:10</p>
+					<p class="con_p2">{{ auditTime }}</p>
 				</div>
 				<div class="flex_between_v">
 					<p class="con_p1">处理方式：</p>
-					<p class="con_p2 cp1">转出成功</p>
-					<p class="con_p2 cp2" v-if="0">待处理</p>
-					<p class="con_p2 cp3" v-if="0">驳回</p>
+					<p class="con_p2 cp1" v-if="status == 1">转出成功</p>
+					<p class="con_p2 cp2" v-if="status == 0">待处理</p>
+					<p class="con_p2 cp3" v-if="status == 2">驳回</p>
 				</div>
 				<div class="flex_between_v">
 					<p class="con_p1">处理意见：</p>
-					<p class="con_p2">账户存在风险，无法完成转出服务</p>
+					<p class="con_p2">{{ reason }}</p>
 				</div>
 			</div>
 		</div>
@@ -30,17 +30,50 @@
 </template>
 
 <script>
+	import { Toast } from 'vant'
+	import qs from 'qs'
 	export default({
 		name: 'explicit',
 		data () {
 			return {
+				id: '',									//账单id
+				serialNum: '1111111111',				//流水号
+				createTime: '2018-01-01 00:00:00',		//创建时间
+				auditTime: '2018-01-01 00:00:00',		//结束时间
+				status: 1,								//处理方式 :0@申请中;1@已通过;2@未通过
+				reason: ''								//处理意见
 			}
+		},
+		created () {
+			this.get()
 		},
 		methods: {
 			//返回
 		    onClickLeft () {
 		        this.$router.push({path:'/turnou'})
-	       	}
+	       	},
+	       	//获取信息
+	       	get () {
+				let that = this
+				that.pageNum = that.pageNum + 1
+				that.$axios({
+			        url: '/api/app/tixianApply/queryTixianDetail',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	id: that.$route.query.id
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		that.serialNum = res.data.data.serialNum
+			    		that.createTime = res.data.data.createTime
+			    		that.auditTime = res.data.data.auditTime
+			    		that.status = res.data.data.status
+			    		that.reason = res.data.data.reason
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+			}
 		}
 	})
 </script>

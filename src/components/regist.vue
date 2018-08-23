@@ -1,21 +1,21 @@
 <template>
 	<div class="regist">
-		<img class="welcome" src="@/assets/Welcome@3x.png"/>
+		<img class="welcome" src="@/assets/Welcome@2x.png"/>
 		<div class="com">
 			<div class="int_fle">
-				<img src="@/assets/icon_yaoqingren@3x.png"/>
-				<input type="text" class="malef1" v-model="phone" placeholder="请输入推荐人手机号"/>
+				<img src="@/assets/icon_yaoqingren@2x.png"/>
+				<input type="text" class="malef1" v-model="referrerName" placeholder="请输入推荐人手机号"/>
 				<img class="del" src="@/assets/shanchu.png" v-if="phone" @click="phone = ''"/>
 			</div>
 			<div class="int_fle">
-				<img src="@/assets/icon_iphone@3x.png"/>
-				<input type="text" name="" id="" v-model="phone" placeholder="请输入您的手机号"/>
+				<img src="@/assets/icon_iphone@2x.png"/>
+				<input type="text" v-model="phone" placeholder="请输入您的手机号"/>
 				<img class="del" src="@/assets/shanchu.png" v-if="phone" @click="phone = ''"/>
 			</div>
 			<div class="flex_between_v">
 				<div class="int_fle mar0">
-					<img src="@/assets/icon_yanzhengma@3x.png"/>
-					<input type="text" name="" id="" v-model="code" placeholder="请输入您收到的验证号"/>
+					<img src="@/assets/icon_yanzhengma@2x.png"/>
+					<input type="text" v-model="code" placeholder="请输入您收到的验证码"/>
 					<img class="del" src="@/assets/shanchu.png" v-show="code" @click="code = ''"/>
 				</div>
 				<p class="getcode opt5" v-if="show && !codeshow">验证码</p>
@@ -23,13 +23,13 @@
 	            <p class="getcode opt5" v-if="!show">{{count}}s后获取</p>				
 			</div>
 			<div class="int_fle">
-				<img src="@/assets/icon_mima@3x.png"/>
+				<img src="@/assets/icon_mima@2x.png"/>
 				<input type="password" v-if="passhow == 1" v-model="password" placeholder="请您设置6-16位密码"/>
 				<input type="text" v-if="passhow == 0" v-model="password" placeholder="请您设置6-16位密码"/>
 				<img src="@/assets/icon_closeeyes@2x.png" v-if="passhow == 1" @click="passhow = 0"/>
 				<img src="@/assets/icon_openeyes@2x.png" v-if="passhow == 0" @click="passhow = 1"/>
 			</div>
-			<p class="link_p">点击查看<router-link to='/'>《用户协议》</router-link></p>
+			<p class="link_p">点击查看<router-link to='/agreement'>《用户协议》</router-link></p>
 		</div>
 		<div class="reg" v-if="phone && code && password" @click="regClick">
 			立即注册
@@ -52,9 +52,10 @@
 			 	count: '',					//倒计时
 			 	timer: null,				//倒计时事件
 			 	codeshow: false,			//否不可点击
-				phone:'',
-				code: '',
-				password: '',
+			 	referrerName: '',			//推荐人手机号
+				phone:'',					//账号
+				code: '',					//验证码
+				password: '',				//密码
 				passhow: 0 || 1
 			}
 		},
@@ -63,7 +64,7 @@
 		    getCode () {
 		        let that = this
 		        that.$axios({
-		      	  	url: '/api/app/appUser/getVerificationCode',
+		      	  	url: '/api/app/yzm/yzm',
 		       		method: 'POST',
 		        	data: qs.stringify({
 		          		phone: that.phone
@@ -96,18 +97,23 @@
 		    //提交
 		    regClick () {
 		    	let that = this
+		    	if ( that.password.length < 6 || that.password.length > 16) {
+		    		Toast('请设置6-16位密码')
+		    		return false
+		    	}
 		        that.$axios({
-		      	  	url: '/api/app/appUser/register',
+		      	  	url: '/api/app/user/register',
 		       		method: 'POST',
 		        	data: qs.stringify({
-		          		phone: that.phone,
-		          		verificationCode: that.code,
-		          		referrerPhone: that.people
+		        		userName: that.phone,
+		        		password: that.password,
+		        		referrerName: that.referrerName,
+		          		code: that.code
 		        	})
 		      	}).then(res => {
 			        if (res.data.code == 0) {
 			        	Toast(res.data.msg)
-			        	that.$router.pus({path:'/'})
+			        	that.$router.push({path:'/'})
 			        } else {
 			          	Toast(res.data.msg)
 			        }

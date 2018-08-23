@@ -8,28 +8,28 @@
 		<div class="flex_between_v">
 			<p>性别</p>
 			<div class="sex">
-				<p @click="sexed = 0" :class="{ addbor: !sexed }">男</p>
-				<p @click="sexed = 1" :class="{ addbor: sexed }">女</p>
+				<p @click="sex = 0" :class="{ addbor: !sex }">男</p>
+				<p @click="sex = 1" :class="{ addbor: sex }">女</p>
 			</div>
 		</div>
 		<div class="flex_between_v">
 			<p class="to_p">身份证</p>
-			<input type="text" v-model="carId" placeholder="请输入您的身份证号码"/>
+			<input type="text" v-model="idCard" placeholder="请输入您的身份证号码"/>
 		</div>
 		<div class="flex_between_v">
 			<p class="to_p">开户银行</p>
-			<input type="text" v-model="bank" placeholder="请输入开户行银行名称"/>
+			<input type="text" v-model="openBank" placeholder="请输入开户行银行名称"/>
 		</div>
 		<div class="flex_between_v">
 			<p class="to_p">开户支行</p>
-			<input type="text" v-model="branch" placeholder="请输入开户行支行名称"/>
+			<input type="text" v-model="subBank" placeholder="请输入开户行支行名称"/>
 		</div>
 		<div class="flex_between_v">
 			<p class="to_p">银行卡号</p>
-			<input type="text" v-model="number" placeholder="请输入您的银行名称"/>
+			<input type="text" v-model="bankId" placeholder="请输入您的银行名称"/>
 		</div>
 		<div class="bom_div">
-			<div class="add">
+			<div class="add" @click="sub">
 				保存
 			</div>		
 		</div>
@@ -37,23 +37,74 @@
 </template>
 
 <script>
+	import { Toast } from 'vant'
+	import qs from 'qs'
 	export default{
 		name: 'edit',
 		data () {
 			return {
 				name: '',
-				sexed: 0,				//选择性别 0男 1女
-				carId: '',
-				bank: '',
-				branch: '',
-				number: ''
+				sex: 0,				//选择性别 0男 1女
+				idCard: '',			//身份证号
+				openBank: '',		//开户支行
+				subBank: '',		//开户行
+				bankId: ''			//银行卡号
 			}
+		},
+		created () {
+			this.get()
 		},
 		methods: {
 			//返回
 		    onClickLeft () {
 		        this.$router.push({path:'/peodata'})
-	        }
+	       	},
+	       	//获取个人信息
+	       	get () {
+	       		let that = this
+				that.$axios({
+			        url: '/api/app/userInfo/queryOneByName',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	userId: localStorage.getItem('userId')
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		that.name = res.data.data.name
+			    		that.sex = res.data.data.sex
+			    		that.idCard = res.data.data.idCard
+			    		that.openBank = res.data.data.openBank
+			    		that.subBank = res.data.data.subBank
+			    		that.bankId = res.data.data.bankId
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+	       	},
+	       	//保存
+	       	sub () {
+	       		let that = this
+				that.$axios({
+			        url: '/api/app/userInfo/update',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	userId: localStorage.getItem('userId'),
+			        	name: that.name,
+			        	sex: that.sex,
+			        	idCard: that.idCard,
+			        	openBank: that.openBank,
+			        	subBank: that.subBank,
+			        	bankId: that.bankId
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		Toast(res.data.msg)
+			    		that.$router.push({path:'/peodata'})
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+	       	},
 		}
 	}
 </script>

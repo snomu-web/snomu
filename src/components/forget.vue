@@ -3,13 +3,13 @@
 		<van-nav-bar title="忘记密码" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="con">
 			<div class="int_fle">
-				<img src="@/assets/icon_iphone@3x.png"/>
+				<img src="@/assets/icon_iphone@2x.png"/>
 				<input type="text" name="" id="" v-model="phone" placeholder="请输入您的手机号"/>
 				<img class="del" src="@/assets/shanchu.png" v-if="phone" @click="phone = ''"/>
 			</div>
 			<div class="flex_between_v">
 				<div class="int_fle mar0">
-					<img src="@/assets/icon_yanzhengma@3x.png"/>
+					<img src="@/assets/icon_yanzhengma@2x.png"/>
 					<input type="text" name="" id="" v-model="code" placeholder="请输入您收到的验证号"/>
 					<img class="del" src="@/assets/shanchu.png" v-show="code" @click="code = ''"/>
 				</div>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+	import { Toast } from 'vant'
+	import qs from 'qs'
 	export default{
 		name: 'forget',
 		data () {
@@ -49,7 +51,7 @@
 		    getCode () {
 		        let that = this
 		        that.$axios({
-		      	  	url: '/api/app/appUser/getVerificationCode',
+		      	  	url: '/api/app/yzm/yzm',
 		       		method: 'POST',
 		        	data: qs.stringify({
 		          		phone: that.phone
@@ -83,19 +85,16 @@
 		    logClick () {
 		    	let that = this
 		        that.$axios({
-		      	  	url: '/api/app/appUser/login',
+		      	  	url: '/api/app/user/checkCode',
 		       		method: 'POST',
 		        	data: qs.stringify({
-		          		phone: that.phone,
-		          		verificationCode: that.code
+		          		userName: that.phone,
+		          		code: that.code
 		        	})
 		      	}).then(res => {
 			        if (res.data.code == 0) {
-			        	Toast(res.data.msg)
 			        	localStorage.setItem('userId',res.data.data.userId)
-			        	localStorage.setItem('myId',res.data.data.userId)
-			        	localStorage.setItem('myPhone',that.phone)
-			        	localStorage.setItem('isTrust',res.data.data.isTrust)
+			        	localStorage.setItem('userName',res.data.data.userName)
 			        	that.$router.push({path:'/change'})
 			        } else {
 			          	Toast(res.data.msg)

@@ -8,19 +8,24 @@
 			</div>
 			<div class="line">				
 			</div>
-			<div class="flex_center sel_p" @click="showB = true">
+			<div class="flex_center sel_p" @click="">
 				<p>{{ popB }}</p>
 				<img class="btn" src="@/assets/btn_triangle@3x.png"/>
 			</div>
 		</div>
-		<div class="list_box">
-			<div class="list" v-for="item in 5" :key='item' @click="detail(item)">
+		<van-list class="all list_box" v-model="loading" :finished="finished" @load="onLoad">
+			<div class="list" v-for="(item, index) in list" :key='index' @click="detail(item.id,item.tixianIncome)">
 				<div class="flex_between_v list_p">
-					<p class="list_p1">水果便利店</p>
-					<p class="list_p2">-1500</p>
+					<p class="list_p1">{{ item.msg }}</p>
+					<p class="list_p2" v-if="item.tixianIncome <= 0">{{ item.tixianIncome }}</p>
+					<p class="list_p2" v-else>+{{ item.tixianIncome }}</p>
 				</div>
-				<p class="list_p3">消费时间：04.22  13:30</p>
+				<p class="list_p3" >消费时间：{{ item.createTime }}</p>
+				<p class="list_p3" >消费时间：{{ item.createTime }}</p>
 			</div>
+		</van-list>
+		<div class="" v-if="list.length == 0" style="text-align: center;">
+			暂无数据
 		</div>
 		<!--弹窗1-->
 		<van-popup v-model="showA" position="bottom" :overlay="true">
@@ -34,6 +39,8 @@
 </template>
 
 <script>
+	import { Toast } from 'vant'
+	import qs from 'qs'
 	export default{
 		name: 'bill',
 		data () {
@@ -41,10 +48,16 @@
 				iteh: 88,
 				showA: false,
 				showB: false,
-				columnsA: ['全部', '充值余额', '购买积分', '返点释放', '消费', '提现', '转账'],
+				columnsA: ['全部', '充值', '购买积分', '提现', '转账', '购物', '积分释放', '佣金'],
+				type: '',					//类型
 				columnsB: ['全部', '余额', '购物积分', '转出积分', '期权'],
 				popA: '全部',
-				popB: '货币种类'
+				popB: '货币种类',
+				list: [],					//列表
+				pageNum: 1,					//当前页数
+				loading: false,
+      			finished: false,
+      			immediate:false
 			}
 		},
 		methods: {
@@ -53,8 +66,14 @@
 		        this.$router.push({path:'/mine'})
 	        },
 	        //弹窗1确认
-	        onConfirmA (e) {
-	        	this.popA = e
+	        onConfirmA (value, index) {
+	        	this.popA = value
+	        	this.type = index
+	        	this.list = []
+	        	if (index == 0) {
+	        		this.type = ''
+	        	}
+	        	this.addlist(1)
 	        	this.showA = false
 	        },
 	        //弹窗2确认
@@ -62,9 +81,44 @@
 	        	this.popB = e
 	        	this.showB = false
 	        },
+	        //加载
+			onLoad() {
+				let that = this
+				let pageNum = that.pageNum
+				setTimeout(() => {
+			        that.addlist(pageNum)
+		      	}, 500)
+		    },
+			//获取列表
+			addlist (pageNum) {
+				let that = this
+				that.pageNum = that.pageNum + 1
+				that.$axios({
+			        url: '/api/app/income/queryBill',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	pageNum: pageNum,
+			        	userId: localStorage.getItem('userId'),
+			        	type: that.type
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		for (let i = 0; i < res.data.data.length; i++) {
+				          	that.list.push(res.data.data[i]);
+				      	}
+			    		that.loading = false
+			    		that.immediate = false
+			    		if ( pageNum >= res.data.page.pages) {
+			    			that.finished = true
+			    		}
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+			},
 	        //订单详情
-	        detail (e) {
-	        	this.$router.push({path: '/detail', query:{'id': e}})
+	        detail (e, a) {	        	
+	        	this.$router.push({path: '/detail'})
 	        }
 		}
 	}

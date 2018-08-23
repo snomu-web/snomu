@@ -3,7 +3,7 @@
 		<van-nav-bar title="转出" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="box">
 			<div class="">
-				<p class="top_p1">3500</p>
+				<p class="top_p1">{{ balance }}</p>
 				<p class="top_p2">账户余额（元)</p>				
 			</div>
 			<div class="flex_between_v top_flex">
@@ -14,32 +14,43 @@
 				<p class="tex_p1">温馨提示：</p>
 				<p class="tex_p2">仅支持余额转出，转出积分可以先转换成余额再进行转出</p>				
 			</div>
-			<div class="list_box">
-				<div class="list" v-for="item in 5" :key='item' @click="detail(item)">
+			<van-list class="all list_box" v-model="loading" :finished="finished" @load="onLoad">
+				<div class="list" v-for="(item, index) in list" :key='index' @click="detail(item.id)">
 					<div class="flex_between_v list_p">
-						<p class="list_p1">转出金额{{ item }}</p>
-						<p class="list_p2a" v-if="item == 1">转出成功</p>
-						<p class="list_p2b" v-if="item == 2">待处理</p>
-						<p class="list_p2c" v-if="item == 3">驳回</p>
+						<p class="list_p1">转出金额{{ item.sum }}</p>
+						<p class="list_p2a" v-if="item.status == 1">转出成功</p>
+						<p class="list_p2b" v-if="item.status == 0">待处理</p>
+						<p class="list_p2c" v-if="item.status == 2">驳回</p>
 					</div>
 					<p class="list_p3">
-						<span>工商银行</span>
-						<span>04.23  15:30</span>
+						<span>{{ item.bank }}</span>
+						<span>{{ item.createTime }}</span>
 					</p>
-					<p class="card">{{ Cardnumber }}</p>
+					<p class="card">**** **** **** {{ item.bankId.slice(9,12) }}</p>
 				</div>
-			</div>
+			</van-list>
 		</div>
 	</div>
 </template>
 
 <script>
+	import { Toast } from 'vant'
+	import qs from 'qs'
 	export default({
 		name: 'turnou',
 		data () {
 			return {
 				card: '123456789012',					//银行卡号
+				balance: '0',							//余额
+				list: [],								//列表
+				pageNum: 1,								//当前页数
+				loading: false,
+      			finished: false,
+      			immediate:false
 			}
+		},
+		created () {
+			this.get()
 		},
 		computed: {
 			Cardnumber () {
@@ -54,7 +65,58 @@
 	       	//转出明细
 	       	detail (e) {
 	       		this.$router.push({path: '/explicit', query:{'id': e}})	
-	       	}
+	       	},
+	       	//加载
+			onLoad() {
+				let that = this
+				let pageNum = that.pageNum
+				setTimeout(() => {
+			        that.addlist(pageNum)
+		      	}, 500)
+		    },
+		    //获取余额
+		    get () {
+				let that = this
+				that.$axios({
+			        url: '/api/app/userAcount/queryByBalance',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	userId: localStorage.getItem('userId')
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		that.balance = res.data.data.balance
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+			},
+			//获取列表
+			addlist (pageNum) {
+				let that = this
+				that.pageNum = that.pageNum + 1
+				that.$axios({
+			        url: '/api/app/tixianApply/queryTiXianInfo',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	pageNum: pageNum,
+			        	userId: localStorage.getItem('userId')
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		for (let i = 0; i < res.data.data.length; i++) {
+				          	that.list.push(res.data.data[i]);
+				      	}
+			    		that.loading = false
+			    		that.immediate = false
+			    		if ( pageNum >= res.data.page.pages) {
+			    			that.finished = true
+			    		}
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+			}
 		}
 	})
 </script>

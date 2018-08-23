@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
 import Regist from '@/components/regist'
+import Agreement from '@/components/agreement'
 import Forget from '@/components/forget'
 import Change from '@/components/change'
 import Index from '@/components/index'
@@ -15,6 +16,7 @@ import Revise from '@/components/revise'
 import Payment from '@/components/payment'
 import Addre from '@/components/addre'
 import Pushadd from '@/components/pushadd'
+import Addedit from '@/components/addedit'
 import Peodata from '@/components/peodata'
 import Edit from '@/components/edit'
 import Team from '@/components/team'
@@ -34,6 +36,7 @@ const router = new Router({
   routes: [
   	{path: '/',name: 'login',component: Login,meta: {title: '登录'}},
     {path: '/regist',name: 'regist',component: Regist,meta: {title: '注册'}},
+    {path: '/agreement',name: 'agreement',component: Agreement,meta: {title: '用户协议'}},
     {path: '/forget',name: 'forget',component: Forget,meta: {title: '忘记密码'}},
     {path: '/change',name: 'change',component: Change,meta: {title: '忘记密码'}},
     {path: '/index',name: 'index',component: Index,meta: {title: '神农牧'}, children:[
@@ -47,6 +50,7 @@ const router = new Router({
     {path: '/revise',name: 'revise',component: Revise,meta: {title: '密码修改'}},
     {path: '/payment',name: 'payment',component: Payment,meta: {title: '支付密码'}},
     {path: '/addre',name: 'addre',component: Addre,meta: {title: '收货地址'}},
+    {path: '/addedit',name: 'addedit',component: Addedit,meta: {title: '收货地址'}},
     {path: '/pushadd',name: 'pushadd',component: Pushadd,meta: {title: '添加新地址'}},
     {path: '/peodata',name: 'peodata',component: Peodata,meta: {title: '个人资料'}},
     {path: '/edit',name: 'edit',component: Edit,meta: {title: '修改资料'}},

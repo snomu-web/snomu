@@ -1,6 +1,6 @@
 <template>
 	<div class="login">
-		<img class="welcome" src="@/assets/Welcome@3x.png"/>
+		<img class="welcome" src="@/assets/Welcome@2x.png"/>
 		<div class="flex_start_v">
 			<div class="top_p1 posire" @click="type = 0">
 				<p :class="{ col222: !type }">账号密码登录</p>
@@ -13,13 +13,13 @@
 		</div>
 		<div class="com">
 			<div class="int_fle">
-				<img src="@/assets/icon_iphone@3x.png"/>
+				<img src="@/assets/icon_iphone@2x.png"/>
 				<input type="text" name="" id="" v-model="phone" placeholder="请输入您的手机号"/>
 				<img class="del" src="@/assets/shanchu.png" v-if="phone" @click="phone = ''"/>
 			</div>
 			<div class="flex_between_v" v-if="type == 1">
 				<div class="int_fle mar0">
-					<img src="@/assets/icon_yanzhengma@3x.png"/>
+					<img src="@/assets/icon_yanzhengma@2x.png"/>
 					<input type="text" name="" id="" v-model="code" placeholder="请输入您收到的验证号"/>
 					<img class="del" src="@/assets/shanchu.png" v-if="code" @click="code = ''"/>
 				</div>
@@ -29,14 +29,14 @@
 			</div>
 		</div>
 		<div class="int_fle" v-if="type == 0">
-			<img src="@/assets/icon_mima@3x.png"/>
-			<input type="password" v-if="passhow == 1" v-model="password" placeholder="请您设置6-16位密码"/>
-			<input type="text" v-if="passhow == 0" v-model="password" placeholder="请您设置6-16位密码"/>
+			<img src="@/assets/icon_mima@2x.png"/>
+			<input type="password" v-if="passhow == 1" v-model="password" placeholder="请输入您的密码"/>
+			<input type="text" v-if="passhow == 0" v-model="password" placeholder="请输入您的密码"/>
 			<img src="@/assets/icon_closeeyes@2x.png" v-if="passhow == 1" @click="passhow = 0"/>
 			<img src="@/assets/icon_openeyes@2x.png" v-if="passhow == 0" @click="passhow = 1"/>
 		</div>
 		<router-link to='/forget' v-if="type == 0" class='forget'>忘记密码？</router-link>
-		<div class="reg" v-if="phone && code" @click="logClick">
+		<div class="reg" v-if="(phone && code) || (phone && password)" @click="logClick">
 			登录
 		</div>
 		<div class="reg opt5" v-else>
@@ -54,7 +54,7 @@
 		data () {
 			return {
 				type: 0 || 1,   			//0账号密码 1手机号登录
-				password: '',
+				password: '',				//密码
 				passhow: 0 || 1,
 				show: true,					//显示获取
 			 	count: '',					//倒计时
@@ -70,7 +70,7 @@
 		    getCode () {
 		        let that = this
 		        that.$axios({
-		      	  	url: '/api/app/appUser/getVerificationCode',
+		      	  	url: '/api/app/yzm/yzm',
 		       		method: 'POST',
 		        	data: qs.stringify({
 		          		phone: that.phone
@@ -103,20 +103,30 @@
 		    //登录
 		    logClick () {
 		    	let that = this
+		    	let data = ''
+		    	let url = ''
+		    	if (that.type == 0) {
+		    		data = {
+		    			userName: that.phone,
+		    			password: that.password
+		    		}
+		    		url = '/api/app/user/loginByPwd'
+		    	} else {
+		    		data = {
+		    			userName: that.phone,
+		    			code: that.code
+		    		}
+		    		url = '/api/app/user/loginByCode'
+		    	}
 		        that.$axios({
-		      	  	url: '/api/app/appUser/login',
+		      	  	url: url,
 		       		method: 'POST',
-		        	data: qs.stringify({
-		          		phone: that.phone,
-		          		verificationCode: that.code
-		        	})
+		        	data: qs.stringify(data)
 		      	}).then(res => {
 			        if (res.data.code == 0) {
 			        	Toast(res.data.msg)
 			        	localStorage.setItem('userId',res.data.data.userId)
-			        	localStorage.setItem('myId',res.data.data.userId)
-			        	localStorage.setItem('myPhone',that.phone)
-			        	localStorage.setItem('isTrust',res.data.data.isTrust)
+			        	localStorage.setItem('userName',res.data.data.userName)
 			        	that.$router.push({path:'/home'})
 			        } else {
 			          	Toast(res.data.msg)

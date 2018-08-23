@@ -1,6 +1,6 @@
 <template>
-	<div class="pushadd">
-		<van-nav-bar title="添加新地址" left-text="返回" left-arrow @click-left="onClickLeft"/>
+	<div class="addedit">
+		<van-nav-bar title="编辑地址" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="flex_between_v">
 			<p>收货人姓名</p>
 			<input type="text" v-model="name" placeholder="请输入收货人姓名"/>
@@ -36,20 +36,33 @@
 	import qs from 'qs'
 	import addressList from '@/components/addressList'
 	export default{
-		name: 'pushadd',
+		name: 'addedit',
 		data () {
 			return {
 				show: false,
 				itheight: 88,
 				name: '',
 				phone: '',
-				address: '请选择所在区域',
+				address: '',
 				list: {'province_list': {}, 'city_list': {}, 'county_list': {}},					//地址列表
 				shippingAddress: '',				//详细地址
 				province: '',						//省
 				city: '',							//市
-				region: ''							//区
+				region: '',							//区
+				id: ''								//地址id
 			}
+		},
+		created () {
+			let that = this
+			let item = JSON.parse(that.$route.query.item)
+			that.id = item.id
+			that.name = item.name
+        	that.phone = item.phone
+        	that.province = item.province
+        	that.city = item.city
+        	that.region = item.region
+        	that.shippingAddress = item.shippingAddress
+        	that.address = item.province + '/' + item.city + '/' +item.region
 		},
 		mounted () {
 			this.list.province_list = addressList.province_list
@@ -78,9 +91,10 @@
 	       		let that = this
 	       		console.log(this.address)
 				that.$axios({
-			        url: '/api/app/shopAddress/createAddress',
+			        url: '/api/app/shopAddress/updateAddress',
 			        method: 'POST',
 			        data: qs.stringify({
+			        	id: that.id,
 			        	userId: localStorage.getItem('userId'),
 			        	name: that.name,
 			        	phone: that.phone,
@@ -96,7 +110,7 @@
 			    		Toast(res.data.msg)		    		
 			    	}
 			    })
-	       	},
+	       	}
 		}		
 	}
 </script>

@@ -4,13 +4,14 @@
 		<div class="min_top flex_start">
 			<div class="flex_between_v top_tel">
 				<div class="flex_between_v">
-					<img class="tx_img" src="@/assets/pic_touxiang@2x.png"/>
-					<p class="phone_top">{{phoneSlice}}</p>					
+					<img class="tx_img" :src="headPic" v-if="headPic"/>
+					<img class="tx_img" src="@/assets/pic_touxiang@2x.png" v-else/>
+					<p class="phone_top">{{ phone }}</p>					
 				</div>
 				<div class="">
 					<div class="flex_start_v">
 						<img class="star_img" src="@/assets/icon_star@3x.png"/>
-						<p class="star_p">{{ userGradeName }}星会员</p>
+						<p class="star_p">{{ gradeName }}</p>
 					</div>
 				</div>				
 			</div>			
@@ -18,49 +19,49 @@
 				<div class="top_con">
 					<div class="flex_between_v con_d1">
 						<p class="">余额（元）</p>
-						<router-link to='/turnou' class="flex_between_v">
-							<img src="@/assets/btn_chongzhi@3x.png" style="width: 1.6rem; height: .6rem;"/>
-							<p class="y_p1">转出</p>								
-						</router-link>
+						<div class="flex_between_v">
+							<!--<img src="@/assets/btn_chongzhi@3x.png" style="width: 1.6rem; height: .6rem;"/>-->
+							<router-link :to="{path:'/turnou',query:{'ye':balance}}" class="y_p1">转出</router-link>								
+						</div>
 					</div>
-					<p class="y_p2">20000</p>
+					<p class="y_p2">{{ balance }}</p>
 					<div class="flex_between_v marcon">
 						<div class="flex1">
-							<p class="y_p3">10000000</p>
+							<p class="y_p3">{{ sumIntegral }}</p>
 							<p class="y_p4">累计购买(元)</p>
 						</div>
 						<div class="y_texcen flex1">
-							<p class="y_p3">5500</p>
+							<p class="y_p3">{{ totalIncomeIntegral }}</p>
 							<p class="y_p4">累计收益积分</p>
 						</div>
 						<div class="y_texrgh flex1">
-							<p class="y_p3">500</p>
+							<p class="y_p3">{{ todayIncome }}</p>
 							<p class="y_p4">今日收益</p>
 						</div>
 					</div>
 					<div class="flex_between_v ">
 						<div class="flex1">
-							<p class="y_p3">10000000</p>
+							<p class="y_p3">{{ shopIntegral }}</p>
 							<p class="y_p4">购物积分</p>
 						</div>
 						<div class="y_texcen flex1">
-							<p class="y_p3">5500</p>
+							<p class="y_p3">{{ tixianIntegral }}</p>
 							<p class="y_p4">转出积分</p>
 						</div>
 						<div class="y_texrgh flex1">
-							<p class="y_p3">500</p>
+							<p class="y_p3">{{ fixedIntegral }}</p>
 							<p class="y_p4">期权</p>
 						</div>
 					</div>
 				</div>
 			</div>
-			<router-link to='/myteam' class="flex_between_v list_div border0 pad0">
+			<!--<router-link to='/myteam' class="flex_between_v list_div border0 pad0">
 				<div class="flex_start_v">
 					<img src="@/assets/tdicon@2x.png" style="width: .28rem; height: .34rem;"/>
 					<p class="list_p1">神农牧币包</p>
 				</div>
 				<img src="@/assets/commone_btn_in@2x.png" class="right_img"/>
-			</router-link>
+			</router-link>-->
 		</div>
 		<div class="min_list">
 			<router-link to='/bill' class="flex_between_v list_div">
@@ -96,7 +97,7 @@
 					<img src="@/assets/icon_phone@2x.png" style="width: .32rem; height: .32rem;"/>
 					<p class="list_p1">客服电话</p>
 				</div>
-				<p class="list_p1">400-1111-1111</p>
+				<p class="list_p1">{{ tel }}</p>
 			</div>
 			<router-link to='/setmine' class="flex_between_v list_div">
 				<div class="flex_start_v">
@@ -108,10 +109,10 @@
 		</div>
 		<!--电话弹出框-->
 		<van-popup v-model="show">
-			<p class="pop_p1">400-1111-1111</p>
+			<p class="pop_p1">{{ tel }}</p>
 			<div class="pop_bom">
 				<p class="pop_p2" @click="show = false">取消</p>
-				<a href="tel:400-1111-1111" class="pop_p2">呼叫</a>
+				<a :href="tela" class="pop_p2">呼叫</a>
 			</div>
 		</van-popup>
 	</div>
@@ -124,49 +125,48 @@
 		name: 'mine',
 		data () {
 			return {
-				telephone: '11111111111',			//手机号
-				buyOrderNum: 0,						//买入订单数
-				cansaleOrder: 0,					//可卖出订单数
-				freezeOrderNum: 0,					//冻结中订单数
-				price: 0,							//冻结金额
-				saleOrderNum: 0,					//卖出中订单数
-				salePrice: 0,						//售出钱包
-				scheduleMoney: 0,					//排单币
-				scheduleProfit: 0,					//直推收益
-				userGradeName: 0,					//用户会员名称
+				tel: '11111111111',					//客服
+				tela: '',							//客服
+				gradeName: '会员',					//会员等级
+				headPic: '',						//用户头像
+				balance: 0,							//余额
+				fixedIntegral: 0,					//期权
+				shopIntegral: 0,					//购物积分
+				sumIntegral: 0,						//累计购买
+				tixianIntegral: 0,					//转出积分
+				todayIncome: 0,						//今日收益
+				totalIncomeIntegral: 0,				//累计收益
+				phone: 11111111111,					//用户
 				show: false
 			}
 		},
 		created () {
 			this.getdeatil()
 		},
-		computed: {
-			phoneSlice () {
-				return this.telephone.slice(0,3) + '****' + this.telephone.slice(7,11)
-			}
-		},
 		methods: {
 			//账户资料
 			getdeatil () {
 				let that = this
 		        that.$axios({
-		      	  	url: '/api/app/walletInfo/getWalletInfo',
+		      	  	url: '/api/app/myInfo/getMyInfo',
 		       		method: 'POST',
 		        	data: qs.stringify({
 		          		userId: localStorage.getItem('userId')
 		        	})
 		      	}).then(res => {
 			        if (res.data.code == 0) {
-			          	that.telephone = res.data.data.telephone
-			          	that.buyOrderNum = res.data.data.buyOrderNum
-			          	that.cansaleOrder = res.data.data.cansaleOrder
-			          	that.freezeOrderNum = res.data.data.freezeOrderNum
-			          	that.price = res.data.data.price
-			          	that.saleOrderNum = res.data.data.saleOrderNum
-			          	that.salePrice = res.data.data.salePrice
-			          	that.scheduleMoney = res.data.data.scheduleMoney
-			          	that.scheduleProfit = res.data.data.scheduleProfit
-			          	that.userGradeName = res.data.data.userGradeName
+			          	that.tel = res.data.data.tel
+			          	that.tela = 'tel:' + res.data.data.tel
+			          	that.gradeName = res.data.data.gradeName
+			          	that.headPic = res.data.data.headPic
+			          	that.balance = res.data.data.balance
+			          	that.fixedIntegral = res.data.data.fixedIntegral
+			          	that.shopIntegral = res.data.data.shopIntegral
+			          	that.sumIntegral = res.data.data.sumIntegral
+			          	that.tixianIntegral = res.data.data.tixianIntegral
+			          	that.todayIncome = res.data.data.todayIncome
+			          	that.totalIncomeIntegral = res.data.data.totalIncomeIntegral
+			          	that.phone = res.data.data.userName
 			        } else {
 			          	Toast(res.data.msg)
 			        }
@@ -188,7 +188,7 @@ a{box-sizing: border-box;}
 .pad0{padding: 0 !important;}
 .matop16{margin-top: .16rem;}
 .mine{position: relative;}
-.min_top{background: #fff;width: 100%;color: #fff;display: flex;padding: 0 .3rem;margin-bottom: .16rem;}
+.min_top{background: #fff;width: 100%;color: #fff;display: flex;padding: 0 .3rem;margin-bottom: .16rem;padding-bottom: .3rem;}
 .tx_img{width: .8rem;height: .8rem;margin-right: .14rem;}
 .top_tel{height: .8rem;width: 100%; margin: .18rem 0;}
 .phone_top{font-size: .36rem; color: #222222;}

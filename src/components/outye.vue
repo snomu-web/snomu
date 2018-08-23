@@ -3,38 +3,93 @@
 		<van-nav-bar title="余额转出" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="top">
 			<p class="top_p">请输入转出金额</p>
-			<input type="number" v-model="num" class="num" placeholder="请输入您要转出的金额"/>
+			<input type="number" v-model="sum" class="num" placeholder="请输入您要转出的金额"/>
 		</div>
 		<div class="flex_between_v">
-			<p class="p1">当前可用余额(元）：{{ sum }}</p>
-			<p class="p2" @click="all">全部转换</p>
+			<p class="p1">当前可用余额(元）：{{ balance }}</p>
+			<p class="p2" @click="sum = balance">全部转换</p>
 		</div>
 		<div class="bom">
-			<div class="sub">
+			<div class="sub" @click="show = true">
 				转出
 			</div>			
 		</div>
+		<!--弹窗-->
+		<van-dialog v-model="show" show-cancel-button :before-close="beforeClose" :close-on-click-overlay='true'>
+		  	<van-field v-model="payPwd" type="password" label="支付密码" placeholder="请输入支付密码"/>
+		</van-dialog>
 	</div>
 </template>
 
 <script>
+	import { Toast } from 'vant'
+	import qs from 'qs'
 	export default({
 		name: 'outye',
 		data () {
 			return {
-				num: '',
-				sum: 10000
+				balance: '0',
+				sum: '',
+				payPwd: '',
+				show: false
 			}
+		},
+		created () {
+			this.get()
 		},
 		methods: {
 			//返回
 		    onClickLeft () {
 		        this.$router.push({path:'/turnou'})
 	       	},
-	       	//全部转换
-	       	all () {
-	       		this.num = this.sum
-	       	}
+	       	//获取余额
+		    get () {
+				let that = this
+				that.$axios({
+			        url: '/api/app/userAcount/queryByBalance',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	userId: localStorage.getItem('userId')
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		that.balance = res.data.data.balance
+			    	}else{
+			    		Toast(res.data.msg)		    		
+			    	}
+			    })
+			},
+	       	//确认体现
+	       	beforeClose(action, done) {
+	       		let that = this
+	       		console.log(action)
+		      	if (action === 'confirm') {
+		        	that.sub()
+		        	done()
+		      	} else {
+		        	done()
+		      	}
+    		},
+	       	sub () {
+				let that = this
+				that.pageNum = that.pageNum + 1
+				that.$axios({
+			        url: '/api/app/tixianApply/tixianApply',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	userId: localStorage.getItem('userId'),
+			        	sum: that.sum,
+			        	payPwd: that.payPwd
+			        })
+			    }).then(res => {
+			    	if(res.data.code == 0){
+			    		Toast(res.data.msg)	
+			    		that.get ()
+			    	}else{
+			    		Toast(res.data.msg)
+			    	}
+			    })
+			}
 		}
 	})
 </script>
