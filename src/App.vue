@@ -88,6 +88,14 @@ a{text-decoration: none;color: #4A4A4A;}
 	width: 1.8rem!important;
 	height: 0.48rem!important;
 }
+.van-stepper__minus::before, .van-stepper__plus::before{
+	width: .18rem;
+  height: 2px;
+}
+.van-stepper__minus::after, .van-stepper__plus::after {
+    width: 2px;
+    height: .18rem;
+}
 /*购物车结算组件*/
 .van-submit-bar{
 	bottom: 1rem;
@@ -112,7 +120,15 @@ a{text-decoration: none;color: #4A4A4A;}
 	font-size: 0.24rem;
 	line-height: 0.32rem;
 }
-
+.van-button--danger{
+	background-image: linear-gradient(135deg, #FD944A 0%, #FD3D54 100%);
+	border: 0;
+}
+/*多选*/
+.commodity .van-checkbox__icon--round{height: .84rem;}
+.commodity .van-checkbox__label{position: relative;display: block;}
+.commodity .van-checkbox__icon,.commodity  .van-checkbox__label{line-height: normal;}
+.van-checkbox__icon--checked .van-icon{border-color: #FD3D54;background-color: #FD3D54;}
 /*默认弹窗*/
 .van-dialog{font-size: .32rem;border-radius: .08rem;}
 .van-dialog__message{padding: .6rem .4rem;font-size: .4rem;color: #030303;}
