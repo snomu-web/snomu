@@ -1,9 +1,9 @@
 <template>
 	<div class="shopcar">
 		<van-nav-bar
-		  title="购物车"
+		  title="我的订单"
 		  left-text="返回"
-		  right-text="我的订单"
+		  right-text="退货单"
 		  left-arrow
 		  @click-left="onClickLeft"
 		  @click-right="onClickRight"
@@ -13,27 +13,23 @@
 			<img class="shopcar-no-img" src="@/assets/zwpic@2x.png"/>
 			<p>您还未在平台购买过商品～</p>
 		</div>-->
-		<div class="dizhi">
-			<p class="dizhi-one">配送信息:</p>
-			<p class="dizhi-gr">
-				<span id="" class="dizhi-gr-line dizhi-gr-name">
-					<img src="../assets/Combined Shape.png"/>
-					张新发
-				</span>
-				<span id="" class="dizhi-gr-line dizhi-gr-tel">
-					<img src="../assets/Combined Shape.png"/>
-					15789654
-				</span>
-				<span id="" class="dizhi-gr-line dizhi-gr-next">
-					<img src="../assets/bom_btn_in@3x.png"/>
-				</span>
-			</p>
-			<p class="dizhi-sh">收货地址:sfsdf死哦放肆地</p>
-		</div>
 		<div class="commodity">
-			<div class="commodity-name">
-				<van-checkbox v-model="danChecked">卫龙辣条</van-checkbox><span class="delete">删除</span>
+			<div class="commodity-order">
+				<span id="com-ord-num">
+					订单号:1597421453132
+				</span>
+				<span id="com-ord-sj">
+					25-5-4
+				</span>
 			</div>
+			<div class="commodity-wuliu">
+				<span id="com-wl-num">
+					物流单号:1597421453132
+				</span>
+				<span id="com-wl-sj">
+					代发货
+				</span>
+			</div>			
 			<div class="commodity-details">
 				<img src="../assets/fdicon@2x.png"/>
 				<div class="commodity-details-right">
@@ -47,11 +43,6 @@
 					</p>
 				</div>
 			</div>
-		</div>
-		<div class="tijiao">
-			<van-submit-bar :price="3050" button-text="结算" @submit="onSubmit">
-			  <van-checkbox v-model="checked">全选</van-checkbox>
-			</van-submit-bar>
 		</div>
 	</div>
 	
@@ -77,7 +68,7 @@
 		    	history.go(-1)
 		    },
 		    onClickRight() {
-		      	this.$router.push({path:'/myOrder'})
+		      	this.$router.push({path:'/tuihuo'})
 		    },
 		    onSubmit(){
 		    	
@@ -92,97 +83,51 @@
 	height: 100%;
 	background-color: #F5F5F5;
 }
-.dizhi{
-	box-sizing: border-box;
-	padding: 0 0.3rem;
-	width: 7.1rem;
-	height: 2rem;
-	background-color: #FFFFFF;
-	margin: 0 auto;
-	margin-top: 0.2rem;
-	padding-top: 0.15rem;
-}
-.dizhi-one{
-	height: 0.58rem;
-	line-height: 0.58rem;
-	font-size: 0.28rem;
-	color: #4A4A4A;
-	letter-spacing: 0;
-}
-.dizhi-gr{
-	height: 0.58rem;
-	line-height: 0.58rem;
-}
-.dizhi-gr-line{
-	height: 0.58rem;
-	line-height: 0.58rem;
-	font-size: 0.28rem;
-	color: #000000;
-	letter-spacing: 0;
-	position: relative;
-}
-.dizhi-gr-name{
-	
-}
-.dizhi-gr-name img{
-	width: 0.22rem;
-	height: 0.3rem;
-	margin-right: 0.1rem;
-	position: relative;
-    top: 0.05rem;
-}
-.dizhi-gr-tel{
-	position: relative;
-	left: 1.5rem;
-	
-}
-.dizhi-gr-tel img{
-	width: 0.22rem;
-	height: 0.3rem;
-	margin-right: 0.1rem;
-	position: relative;
-    top: 0.05rem;
-}
-.dizhi-gr-next{
-	float: right;
-}
-.dizhi-sh{
-	height: 0.54rem;
-	line-height: 0.54rem;
-	font-size: 0.24rem;
-	color: #4A4A4A;
-}
 /*商品列表*/
 .commodity{
-	width: 7.1rem;
-	height: 2.8rem;
+	width: 100%;
+	height: 3.52rem;
 	margin: 0 auto;
 	background-color: #FFFFFF;
 	margin-top: 0.2rem;
 }
-.commodity-name{
-	padding: 0 0.2rem;
-	height: 0.84rem;
-	line-height: 0.84rem;
+.commodity-order{
+	height: 0.82rem;
+	line-height: 0.82rem;
+	font-size: 0.28rem;
+	color: #000000;
+	border-bottom: 1px solid #F7F2F2;
+	padding: 0 0.3rem;
 }
-#radio{
-	width: 0.32rem;
-	height: 0.32rem;
-	color: #FFFFFF;
-	background-color: #FFFFFF!important;
+#com-ord-num{
+	font-size: 0.28rem;
+color: #000000;
 }
-
-.delete{
+#com-ord-sj{
 	float: right;
+	font-size: 0.28rem;
+color: #777777;
+}
+.commodity-wuliu{
+	height: 0.68rem;
+	line-height: 0.68rem;
 	font-size: 0.24rem;
-	color: #9E9E9E;
-	position: relative;
-    bottom: 0.88rem;
+	padding: 0 0.3rem;
+}
+#com-wl-num{
+	font-size: 0.26rem;
+	color: #4A4A4A;
+}
+#com-wl-sj{
+	float: right;
+	font-size: 0.26rem;
+	color: #777777;
+	
 }
 .commodity-details{
 	width: 100%;
 	height: 1.76rem;
-	padding: 0 0.2rem;
+	padding: 0 0.3rem;
 }
 .commodity-details img{
 	width: 2.22rem;
@@ -194,8 +139,6 @@
 	width: 3.62rem;
 	height: 1.76rem;
 	float: right;
-	position: relative;
-    right: -0.4rem;
 }
 .com-del-hint{
 	height: 0.64rem;

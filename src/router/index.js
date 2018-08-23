@@ -29,6 +29,10 @@ import Outjf from '@/components/outjf'
 import Transfer from '@/components/transfer'
 import PackageDetails from '@/components/packageDetails'
 import TransferConfirm from '@/components/transferConfirm'
+import OnlineStore from '@/components/onlineStore'
+import GoodDetails from '@/components/goodDetails'
+import MyOrder from '@/components/myOrder'
+import Tuihuo from '@/components/tuihuo'
 
 Vue.use(Router)
 
@@ -64,6 +68,10 @@ const router = new Router({
     {path: '/transfer',name: 'transfer',component: Transfer,meta: {title: '转账'}},
     {path: '/packageDetails',name: 'packageDetails',component: PackageDetails,meta: {title: ''}},
     {path: '/transferConfirm',name: 'transferConfirm',component: TransferConfirm,meta: {title: ''}},
+    {path: '/onlineStore',name: 'onlineStore',component: OnlineStore,meta: {title: '线上商城'}},
+    {path: '/goodDetails',name: 'goodDetails',component: GoodDetails,meta: {title: '商品详情'}},
+    {path: '/myOrder',name: 'myOrder',component: MyOrder,meta: {title: '我的订单'}},
+    {path: '/tuihuo',name: 'tuihuo',component: Tuihuo,meta: {title: '退货单'}},
   ]
 })
 
