@@ -4,19 +4,19 @@
 		<div class="goodimgs">
 			<van-swipe :autoplay="3000">
 			  <van-swipe-item v-for="(image, index) in images" :key="index">
-			    <img src="image"/>
+			    <img :src="image"/>
 			  </van-swipe-item>
 			</van-swipe>
 		</div>
 		<div class="goodhint">
 			<p class="jiage">
-				<span class="jiage-this">¥12</span>
-				<span class="jiage-bq">明星产品</span>
-				<span class="jiage-fl">分类</span>
+				<span class="jiage-this">¥{{data.price}}</span>
+				<span class="jiage-bq">{{data.itemTag}}</span>
+				<span class="jiage-fl">{{data.itemTypeName}}</span>
 			</p>
-			<p class="name">卧龙辣条<span class="yun">运费:12元</span></p>
+			<p class="name">{{data.itemName}}<span class="yun">运费:{{data.freightCharge}}元</span></p>
 			<p class="jieshao">
-				时空房间上克隆时代峰峻搜地方熟练度附近水电费健康了收到 地方是
+				{{data.itemDescribe}}
 			</p>
 		</div>
 		<div class="shuliang">
@@ -24,40 +24,94 @@
 				购买数量:
 			</span>
 			<span class="sl-line surplus">
-				剩余:1254
+				剩余:{{data.storeNum}}
 			</span>
 			<span id="stepper">
 				<van-stepper v-model="value" />
 			</span>
 		</div>
-		<button class="btn">加入购物车</button>
+		<button class="btn" @click="addCart">加入购物车</button>
 	</div>
 </template>
 
 <script>
 	import { Stepper } from 'vant';
+	import { Toast } from 'vant';
+	import qs from 'qs';
 	export default {
 		name: "goodDetails",
 		data() {
 			return {
-				images: [
-			        'https://img.yzcdn.cn/1.jpg',
-			        'https://img.yzcdn.cn/2.jpg'
-			    ],
-			    value: 1
+				images: [],
+			    value: 1,
+			    data:{},
+
 			}
 		},
 		created() {
+			this.stgoods()
 		},
 		methods: {		
 			onClickLeft() {
 				history.go(-1)
+			},
+			stgoods(){
+				var newsID=this.$route.query.id;
+				this.$axios({
+			        url: '/api/app/item/queryItemByOne',
+			        method: 'POST',
+			        data: qs.stringify({
+			          id:newsID
+			        })
+			      }).then(res => {
+			        if (res.data.code == 0) {
+			        	this.data = res.data.data	
+			        	let itemUrlNew = this.data.itemUrlNew
+			        	let arr = itemUrlNew.split(",")
+			        	this.images = arr
+//						for (var i = 0; i<arr.length; i++; ){	
+//						    images.push(arr[i]);
+//						}
+			        } else {
+			          Toast(res.data.msg || '查询失败')
+			        }
+			      })
+			},
+			addCart(){
+				var newsID=this.$route.query.id;
+				let that = this
+				this.$axios({
+			        url: '/api/app/shoppingcart/addCart',
+			        method: 'POST',
+			        data: qs.stringify({
+			        	userId:localStorage.getItem('userId'),		        	
+			          	itemId:newsID,
+			          	price:that.data.price,
+			          	freightChrge:that.data.freightCharge,
+			          	amount:that.value,
+			        })
+			      }).then(res => {
+			        if (res.data.code == 0) {
+			        	Toast(res.data.msg)
+			        } else {
+			          Toast(res.data.msg || '查询失败')
+			        }
+			      })
 			},
 		}
 	}
 </script>
 
 <style>
+	/*轮播图组件*/
+	.van-swipe{
+		height: 100%;
+	}
+	.van-swipe-item img{
+		width: 100%;
+		height: 100%;
+	}
+/*=============*/
 .goodDetails{
 	width: 100%;
 	height: 100%;
@@ -135,6 +189,7 @@
 	font-size: 0.36rem;
 	color: #777777;
 	padding-left: 0.3rem;
+	position: relative;
 }
 
 .sl-line{
@@ -148,6 +203,9 @@
 }
 .surplus{
 	font-size: 0.24rem;
+	    position: absolute;
+    /* right: -126px; */
+    right: 2.21rem;
 }
 #stepper{
 	width: 1.8rem;

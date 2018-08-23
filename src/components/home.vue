@@ -41,15 +41,13 @@
 						</span>
 					</router-link>
 				</li>
-				<li>
-					<router-link to='/onlineStore'>
-						<div class="menu-img">
-							<img src="@/assets/xsicon@2x.png"/>
-						</div>
-						<span class="menu-span">
-							线上商城
-						</span>
-					</router-link>
+				<li @click="store">
+					<div class="menu-img">
+						<img src="@/assets/xsicon@2x.png"/>
+					</div>
+					<span class="menu-span">
+						线上商城
+					</span>
 				</li>
 				<li>
 					<router-link to='/none'>
@@ -169,6 +167,10 @@
     		},
     		linkmaichu () {
     			this.$router.push({path:'/integerSaleMain'})
+    		},
+    		store(){
+    			
+    			this.$router.push({path:'/onlineStore'});
     		},
 //  		未开放提示
     		unopened(){

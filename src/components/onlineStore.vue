@@ -3,19 +3,17 @@
 		<van-nav-bar title="线上商城" left-text="返回" left-arrow @click-left="onClickLeft" />
 		<div class="store-box">
 			<ul>
-				<li>
-					<router-link to="goodDetails">
+				<li v-for="item in items" @click="goGoods(item.itemId)">
+					<!--<router-link to="goodDetails">-->
 						<div class="storeimg">
-							<img src="../assets/hcicon@3x.png"/>
+							<img :src="item.itemUrlNew"/>
 						</div>
 						<div class="store-details">
-							<p>fj加深对佛刻录机 死定了房间饭就色东方</p>
+							<p>{{item.itemDescribe}}</p>
 						</div>
 						<span class="money">
-							¥12
-						</span>
-					</router-link>
-					
+							¥{{item.price}}
+						</span>								
 				</li>
 				<li>
 					<div class="storeimg">
@@ -25,7 +23,7 @@
 						<p>fj加深对佛刻录机 死定了房间饭就色东方</p>
 					</div>
 					<span class="money">
-						¥12
+						¥13
 					</span>
 				</li>
 				<li>
@@ -36,7 +34,7 @@
 						<p>fj加深对佛刻录机 死定了房间饭就色东方</p>
 					</div>
 					<span class="money">
-						¥12
+						¥14
 					</span>
 				</li>
 				
@@ -46,18 +44,45 @@
 </template>
 
 <script>
+	import qs from 'qs'
 	export default {
 		name: "integralTrans",
 		data() {
 			return {
+				items:[],
+				itemUrlNew:"",
 			}
 		},
 		created() {
+			this.gain()
 		},
 		methods: {		
 			onClickLeft() {
 				history.go(-1)
 			},
+			gain(){
+				this.$axios({
+			        url: '/api/app/item/queryItem',
+			        method: 'POST',
+			        data: qs.stringify({
+			          pageNum: 1
+			        })
+			      }).then(res => {
+			        if (res.data.code == 0) {
+			        	var imgs  =res.data.data[2].itemUrlNew
+			        	let arr = imgs.split(",")
+			        	this.itemUrlNew = arr[0]
+			          	this.items = res.data.data
+			        } else {
+			          Toast(res.data.msg || '查询失败')
+			        }
+			      })
+			},
+			goGoods(id){
+				
+				this.$router.push({path:'/goodDetails',query:{'id':id}});
+				console.log(id)
+			}
 		}
 	}
 </script>
@@ -76,7 +101,6 @@
 	height: 100%;
 }
 .store-box ul{
-	width: 100%;
 	height: 100%;
 	margin: 0 0.2rem;
 }
@@ -86,7 +110,7 @@
 	width: 3.4rem;
 	height: 3.6rem;
 	margin: 0.05rem 0.05rem;
-	border: 1px solid #777777;
+	background-color: #FFFFFF;
 }
 .storeimg{
 	width: 100%;

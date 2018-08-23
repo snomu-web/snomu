@@ -48,9 +48,28 @@
 				</div>
 			</div>
 		</div>
+		<div class="commodity">
+			<div class="commodity-name">
+				<van-checkbox v-model="danChecked">卫龙辣条</van-checkbox><span class="delete">删除</span>
+			</div>
+			<div class="commodity-details">
+				<img src="../assets/fdicon@2x.png"/>
+				<div class="commodity-details-right">
+					<p class="com-del-hint">师德师风东方闪电第三方士大夫 饭搜地方搜地方发送到地方胜多负少的水电费水电费发送到饭搜地方搜地方搜地方沙发斯蒂芬 收到</p>
+					<p class="com-del-bq"><span class="com-del-bq-left">明星产品</span><span class="com-del-bq-yf">568元</span></p>
+					<p class="com-del-num">
+						<span class="danjia">¥12</span>
+						<span id="stepper">
+							<van-stepper v-model="value" />
+						</span>
+					</p>
+				</div>
+			</div>
+		</div>
+		
 		<div class="tijiao">
-			<van-submit-bar :price="3050" button-text="结算" @submit="onSubmit">
-			  <van-checkbox v-model="checked">全选</van-checkbox>
+			<van-submit-bar :price=price button-text="结算" @submit="onSubmit">
+			  <van-checkbox v-model="checked" @click = "quan">全选</van-checkbox>
 			</van-submit-bar>
 		</div>
 	</div>
@@ -66,8 +85,9 @@
 		data(){
 			return{
 				value: 1,
-				danChecked:true,
-				checked: true
+				danChecked:false,
+				checked: false,
+				price:1000
 			}
 		},
 		
@@ -78,6 +98,11 @@
 		    },
 		    onClickRight() {
 		      	this.$router.push({path:'/myOrder'})
+		    },
+//		    全选
+		    quan(){
+		    	alert("1")
+		    	thsi.danChecked = true
 		    },
 		    onSubmit(){
 		    	
