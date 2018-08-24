@@ -17,10 +17,9 @@
 			<div class="list" v-for="(item, index) in list" :key='index' @click="detail(item.id,item.tixianIncome)">
 				<div class="flex_between_v list_p">
 					<p class="list_p1">{{ item.msg }}</p>
-					<p class="list_p2" v-if="item.tixianIncome <= 0">{{ item.tixianIncome }}</p>
-					<p class="list_p2" v-else>+{{ item.tixianIncome }}</p>
+					<p class="list_p2" v-if="item.tixianIncome <= 0">{{ item.tixianIncome + item.balanceIncome + item.shopIncome + item.fixIncome }}</p>
+					<p class="list_p2" v-else>+{{ item.tixianIncome + item.balanceIncome + item.shopIncome + item.fixIncome }}</p>
 				</div>
-				<p class="list_p3" >消费时间：{{ item.createTime }}</p>
 				<p class="list_p3" >消费时间：{{ item.createTime }}</p>
 			</div>
 		</van-list>
@@ -68,7 +67,7 @@
 	        //弹窗1确认
 	        onConfirmA (value, index) {
 	        	this.popA = value
-	        	this.type = index
+	        	this.type = index + 1
 	        	this.list = []
 	        	if (index == 0) {
 	        		this.type = ''
