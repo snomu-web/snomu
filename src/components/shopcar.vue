@@ -1,17 +1,12 @@
 <template>
 	<div class="shopcar">
-		<van-nav-bar
-		  title="购物车"
-		  right-text="我的订单"
-		  @click-right="onClickRight"
-		/>
-		<!--<div class="shopcar-no">
-			<van-nav-bar title="购物车"/>
-			<img class="shopcar-no-img" src="@/assets/zwpic@2x.png"/>
-			<p>您还未在平台购买过商品～</p>
-		</div>-->
+		<van-nav-bar title="购物车" right-text="我的订单" @click-right="onClickRight"/>
 		<div class="box">
-			<div class="dizhi" v-for="(item, index) in addrelist" :key='index' v-if="item.isDefault == 1" @click="addLink">
+			<div class="dizhi flex_between_v" v-if='addrelist.length == 0 && !addre' @click="addLink">
+				<p>请先选择配送地址</p>
+				<img src="@/assets/right@2x.png"/>
+			</div>
+			<div class="dizhi" v-for="(item, index) in addrelist" :key='index' v-if="item.isDefault == 1 && !addre" @click="addLink">
 				<p class="dizhi-one">配送信息:</p>
 				<p class="dizhi-gr">
 					<span id="" class="dizhi-gr-line dizhi-gr-name">
@@ -28,11 +23,28 @@
 				</p>
 				<p class="dizhi-sh">收货地址:{{ item.province }}/{{ item.city }}/{{ item.region }}</p>
 			</div>
+			<div class="dizhi" @click="addLink" v-if="addre">
+				<p class="dizhi-one">配送信息:</p>
+				<p class="dizhi-gr">
+					<span id="" class="dizhi-gr-line dizhi-gr-name">
+						<img src="@/assets/icon_people@2x.png"/>
+						{{ addre.name }}
+					</span>
+					<span id="" class="dizhi-gr-line dizhi-gr-tel">
+						<img src="@/assets/icon_iphone@2x.png"/>
+						{{ addre.phone }}
+					</span>
+					<span id="" class="dizhi-gr-line dizhi-gr-next">
+						<img src="@/assets/right@3x.png"/>
+					</span>
+				</p>
+				<p class="dizhi-sh">收货地址:{{ addre.province }}/{{ addre.city }}/{{ addre.region }}</p>
+			</div>
 			<van-checkbox-group v-model="result" class='check_box' @change='change'>
 				<van-checkbox class='commodity' v-for='(item, index) in list' :key='index' :name='item'>
 					<div class="til_good">
 						<p class="goods_p1">{{ item.itemName }}</p>
-						<p class="goods_p2" @click.stop="delgood(item.id)">删除</p>
+						<p class="goods_p2" @click.stop="delgood(item.id,index)">删除</p>
 					</div>
 					<div class="commodity-details">
 						<img :src="item.url"/>
@@ -87,12 +99,19 @@
 				postage: 0,							//所有商品邮费
 				cartId: [],							//购物车id
 				payPwd: '',							//支付密码
-				show: false							//弹窗
+				show: false,							//弹窗
+				addre: '',							//选取地址
 			}
 		},
 		created () {
 			this.getShop()
 			this.getadd()
+		},
+		mounted () {
+			if (this.$route.query.addre) {
+				let addCheck = this.$route.query.addre
+				this.addre = JSON.parse(addCheck)
+			}
 		},
 		methods: {
 		    onClickRight() {
@@ -193,14 +212,13 @@
 		    	let resul = that.result
 		    	let list = that.list
 		    	if (JSON.stringify(resul) == JSON.stringify(list)) {
-		    		console.log(1)
 		    		that.checked = true
 		    	} else {
 		    		that.checked = false
 		    	}
 		    },
 		 	//删除商品
-		 	delgood (e) {
+		 	delgood (e,index) {
 		    	let that = this
 				that.$axios({
 			        url: '/api/app/shoppingcart/deleteCart',
@@ -210,7 +228,7 @@
 			        })
 			    }).then(res => {
 			    	if(res.data.code == 0){
-			    		
+			    		that.list.splice(index,1)
 			    	}else{
 			    		Toast(res.data.msg)		    		
 			    	}
@@ -221,7 +239,9 @@
 		    	if (e) {
 		    		this.result = this.list
 		    	} else {
-		    		this.result = []
+		    		if (this.result.length == 0) {
+		    			this.result = []
+		    		}
 		    	}
 		    },
 		    //支付弹窗
@@ -250,7 +270,7 @@
 		    		orderDetail.postage=that.result[i].freightCharge
 		    		orderDetails.push(orderDetail)
 		    	}
-		    	that.cartId.join(',')
+		    	that.cartId = that.cartId.join(',')
 		    	let jsonData={
 		        	userId: localStorage.getItem('userId'),
 		        	name: that.name,
@@ -258,7 +278,8 @@
 		        	address: that.address,
 		        	payPrice: that.payPrice,
 		        	postage: that.postage,
-		        	payPwd: that.payPwd
+		        	payPwd: that.payPwd,
+		        	cartId: that.cartId
 			    }
 		    	for (var i = 0; i < orderDetails.length; i++) {
 		    		jsonData["orderDetails["+i+"].itemId"] = orderDetails[i].itemId

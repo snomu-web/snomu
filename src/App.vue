@@ -66,6 +66,11 @@ a{text-decoration: none;color: #4A4A4A;}
 .addre .van-radio .van-icon-checked{color: #FF5651;}
 .addre .van-radio__label{width: 100% !important;line-height: normal;}
 .addre .van-radio{overflow: inherit;}
+.addList .van-radio__input{height: .4rem;margin-left: .3rem;position: absolute;bottom: .18rem;}
+.addList .van-radio .van-icon{font-size: .38rem;}
+.addList .van-radio .van-icon-checked{color: #FF5651;}
+.addList .van-radio__label{width: 100% !important;line-height: normal;}
+.addList .van-radio{overflow: inherit;}
 /*选择器*/
 .van-picker-column li{padding: 0 .1rem !important;}
 .van-picker-column{font-size: .4rem !important;}

@@ -9,6 +9,7 @@ import Index from '@/components/index'
 import Home from '@/components/home'
 import Integral from '@/components/integral'
 import Shopcar from '@/components/shopcar'
+import AddList from '@/components/addList'
 import Mine from '@/components/mine'
 import Setmine from '@/components/setmine'
 import About from '@/components/about'
@@ -55,6 +56,7 @@ const router = new Router({
     {path: '/payment',name: 'payment',component: Payment,meta: {title: '支付密码'}},
     {path: '/addre',name: 'addre',component: Addre,meta: {title: '收货地址'}},
     {path: '/addedit',name: 'addedit',component: Addedit,meta: {title: '收货地址'}},
+    {path: '/addList',name: 'addList',component: AddList,meta: {title: '配送地址'}},
     {path: '/pushadd',name: 'pushadd',component: Pushadd,meta: {title: '添加新地址'}},
     {path: '/peodata',name: 'peodata',component: Peodata,meta: {title: '个人资料'}},
     {path: '/edit',name: 'edit',component: Edit,meta: {title: '修改资料'}},
