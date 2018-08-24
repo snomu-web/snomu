@@ -180,7 +180,7 @@
 .top{font-size: .32rem;color: #222222;margin-top: .4rem;padding: 0 .4rem;}
 .top_p{color: #FF5651;font-size: .4rem;text-align: center;margin-bottom: .6rem;margin-top: .9rem;}
 .top_tab{border-top: .02rem solid #EEEEEE;border-bottom: .02rem solid #EEEEEE;padding: .3rem 0;}
-.thri_name{margin-top: .8rem;text-align: center;color: #222222;font-size: .36rem;height: .36rem;}
+.thri_name{margin-top: .8rem;text-align: center;color: #222222;font-size: .36rem;}
 .con{padding: 0 .36rem;color:  #4A4A4A;line-height: 60px;margin-top: 2rem;}
 .pop_box{width: 80%;background: #EEEEEE;border-radius: 20px;}
 .pop_div{padding:.3rem .5rem 0 .5rem;font-size: .32rem;color: #222222;}
