@@ -101,6 +101,7 @@
 		        	})
 		      	}).then(res => {
 			        if (res.data.code == 0) {
+			        	Toast(res.data.msg)
 			        	that.activateSum = res.data.data.activateSum
 			        } else {
 			          	Toast(res.data.msg)

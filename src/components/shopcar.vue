@@ -11,7 +11,7 @@
 			<p>您还未在平台购买过商品～</p>
 		</div>-->
 		<div class="box">
-			<div class="dizhi" v-for="(item, index) in addrelist" :key='index' v-if="item.isDefault == 1">
+			<div class="dizhi" v-for="(item, index) in addrelist" :key='index' v-if="item.isDefault == 1" @click="addLink">
 				<p class="dizhi-one">配送信息:</p>
 				<p class="dizhi-gr">
 					<span id="" class="dizhi-gr-line dizhi-gr-name">
@@ -78,8 +78,7 @@
 				cellphone: '',						//手机号
 				address: '',						//收货地址
 				amount: 1,							//商品数量
-				danChecked:true,
-				checked: false,
+				checked: false,						//全选按钮
 				price: 0,							//合计
 				list: [],							//列表
 				result: [],							//选中项
@@ -98,6 +97,10 @@
 		methods: {
 		    onClickRight() {
 		      	this.$router.push({path:'/myOrder'})
+		    },
+		    //地址跳转
+		    addLink () {
+		    	this.$router.push({path:'/addList'})
 		    },
 		    //查询地址
 		    getadd () {
@@ -139,7 +142,6 @@
 		    //增加
 		    increase (e,amount,index) {
 		    	let good = this.list[index]
-		    	console.log(good.amount)
 		    	this.amount = this.list[index].amount ++
 		    	if (this.result[index]) {
 		    		this.price += good.price + good.freightCharge		    		
@@ -183,11 +185,18 @@
 		    },
 		    //选择商品
 		    change (e) {
-		    	console.log(e)
 		    	let that = this
 		    	that.price = 0
 		    	for (let i = 0; i < e.length; i++) {
 		    		that.price += e[i].amount * e[i].price + e[i].amount * e[i].freightCharge
+		    	}
+		    	let resul = that.result
+		    	let list = that.list
+		    	if (JSON.stringify(resul) == JSON.stringify(list)) {
+		    		console.log(1)
+		    		that.checked = true
+		    	} else {
+		    		that.checked = false
 		    	}
 		    },
 		 	//删除商品
@@ -235,10 +244,10 @@
 		    		that.postage += that.result[i].amount * that.result[i].freightCharge
 		    		that.cartId.push(that.result[i].id)
 		    		let orderDetail=new Object()
-		    		orderDetail.itemId=that.result[i].amount
+		    		orderDetail.itemId=that.result[i].itemId
 		    		orderDetail.quantity=that.result[i].amount
-		    		orderDetail.payPrice=that.result[i].amount
-		    		orderDetail.postage=that.result[i].amount
+		    		orderDetail.payPrice=that.result[i].price
+		    		orderDetail.postage=that.result[i].freightCharge
 		    		orderDetails.push(orderDetail)
 		    	}
 		    	that.cartId.join(',')
@@ -253,6 +262,9 @@
 			    }
 		    	for (var i = 0; i < orderDetails.length; i++) {
 		    		jsonData["orderDetails["+i+"].itemId"] = orderDetails[i].itemId
+		    		jsonData["orderDetails["+i+"].quantity"] = orderDetails[i].quantity
+		    		jsonData["orderDetails["+i+"].payPrice"] = orderDetails[i].payPrice
+		    		jsonData["orderDetails["+i+"].postage"] = orderDetails[i].postage
 		    	}
 				that.$axios({
 			        url: '/api/app/orders/submitOrder',
