@@ -38,8 +38,6 @@
 			    let val = event
 			    let change = {};
 			    change[type] = val;
-			    console.log(change)
-//			    this.setState(change);
 			},
 			onClickLeft() {
 				history.go(-1)
@@ -64,7 +62,6 @@
 			},
 			goGoods(id){				
 				this.$router.push({path:'/goodDetails',query:{'id':id}});
-				console.log(id)
 			}
 		}
 	}
