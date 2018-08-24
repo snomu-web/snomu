@@ -99,7 +99,7 @@
 				postage: 0,							//所有商品邮费
 				cartId: [],							//购物车id
 				payPwd: '',							//支付密码
-				show: false,							//弹窗
+				show: false,						//弹窗
 				addre: '',							//选取地址
 			}
 		},
@@ -161,6 +161,10 @@
 		    //增加
 		    increase (e,amount,index) {
 		    	let good = this.list[index]
+		    	if (this.list[index].amount == this.list[index].storeNum) {
+		    		Toast('已达到最大库存')
+		    		return false
+		    	}
 		    	this.amount = this.list[index].amount ++
 		    	if (this.result[index]) {
 		    		this.price += good.price + good.freightCharge		    		
