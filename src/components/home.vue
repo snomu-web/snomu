@@ -32,7 +32,7 @@
 		<div class="menu">
 			<ul>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/unopened'>
 						<div class="menu-img">
 							<img src="@/assets/fjicon@2x.png"/>
 						</div>
@@ -50,7 +50,7 @@
 					</span>
 				</li>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/unopened'>
 						<div class="menu-img">
 							<img src="@/assets/fjpicon@2x.png"/>
 						</div>
@@ -60,7 +60,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/unopened'>
 						<div class="menu-img">
 							<img src="@/assets/hcicon@2x.png"/>
 						</div>
@@ -70,7 +70,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/unopened'>
 						<div class="menu-img">
 							<img src="@/assets/sjicon@2x.png"/>
 						</div>
@@ -80,7 +80,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/unopened'>
 						<div class="menu-img">
 							<img src="@/assets/jyicon@2x.png"/>
 						</div>
@@ -90,7 +90,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/unopened'>
 						<div class="menu-img">
 							<img src="@/assets/llicon@2x.png"/>
 						</div>
@@ -100,7 +100,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/unopened'>
 						<div class="menu-img">
 							<img src="@/assets/ghicon@2x.png"/>
 						</div>
@@ -110,7 +110,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/unopened'>
 						<div class="menu-img">
 							<img src="@/assets/wzicon@2x.png"/>
 						</div>
@@ -120,7 +120,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='/none'>
+					<router-link to='/unopened'>
 						<div class="menu-img">
 							<img src="@/assets/fdicon@2x.png"/>
 						</div>
@@ -133,10 +133,9 @@
 		</div>
 		<div class="heard">
 			<van-swipe :autoplay="3000">
-			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
-			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
-			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
-			  <van-swipe-item><img class="swip_img" src="@/assets/banner@2x.png"/></van-swipe-item>
+			  <van-swipe-item v-for="data in datas">
+			  	<img class="swip_img" :src="data.imgUrl"/>
+			  </van-swipe-item>	  
 			</van-swipe>
 		</div>
 		<van-popup v-model="hintshow" :overlay="true">
@@ -150,15 +149,35 @@
 </template>
 
 <script>
+	import { Stepper } from 'vant';
+	import qs from 'qs';
 	export default({
 		name:'home',
 		data() {
 		    return {
-		    	hintshow:false
-//		      images: [];
+		      hintshow:false,
+		      datas: []
     		}
   		},
+  		created() {
+			this.homeImg()
+		},
 		methods: {
+			homeImg(){			
+			this.$axios({
+		        url: '/api/app/banner/getBanner',
+		        method: 'POST',
+		        data: qs.stringify({
+		          	
+		        })
+		      }).then(res => {
+		        if (res.data.code == 0) {
+		        	this.datas = res.data.data
+		        } else {
+		          	Toast(res.data.msg || '查询失败')
+		        }
+		      })		
+			},
 		    onChange(index) {
 		      Toast('当前 Swipe 索引：' + index);
     		},
