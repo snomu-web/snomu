@@ -2,7 +2,7 @@
 	<div class="IntegralDealList">
 		<van-nav-bar title="积分"/>
     	<div class="list">
-    		<div class="every">
+    		<!--<div class="every">
     			<p class="money">1000000<span>元&#12288尊享版</span></p>
     			<div class="yield">
     				<div class="yield-js">
@@ -12,8 +12,11 @@
     					查看详情
     				</div>
     			</div>
+    		</div>-->
+    		<div class="box">
+    			<img src="@/assets/wpic@2x.png"/>
+    			<p>购买积分请联系管理员</p>
     		</div>
-    		
     	</div>
 	</div>
 </template>
@@ -39,6 +42,17 @@ export default {
 }
 </script>
 <style scoped="scoped">
+	.list{
+		height: 100%;
+	}
+	.box{
+		font-size: .36rem;
+		color: #4A4A4A;
+		text-align: center;
+		height: 100%;
+		background: #fff;
+		padding-top: 2rem;
+	}
 	.IntegralDealList{
 		width: 100%;
 		height: 100%;
