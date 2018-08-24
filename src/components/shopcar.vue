@@ -47,7 +47,8 @@
 						<p class="goods_p2" @click.stop="delgood(item.id,index)">删除</p>
 					</div>
 					<div class="commodity-details">
-						<img :src="item.url"/>
+						<img :src="item.url.split(',')[0]"/>
+						<!--<img v-else :src="item.url"/>-->
 						<div class="commodity-details-right">
 							<p class="com-del-hint">{{ item.itemName }}</p>
 							<p class="com-del-bq"><span class="com-del-bq-left">{{ item.itemTag }}</span><span class="com-del-bq-yf">运费：{{ item.freightCharge }}元</span></p>
@@ -213,6 +214,9 @@
 									}
 								}
 							}			    			
+			    		}
+			    		for (let i = 0; i < res.data.data.length; i++) {
+			    			console.log(res.data.data[i].url)
 			    		}
 			    	}else{
 			    		Toast(res.data.msg)		    		

@@ -1,14 +1,17 @@
 <template>
 	<div class="home">
+		<van-nav-bar class='til' title="甲乙丙"/>
 		<div class="operation">
 			<ul>
-				<li @click="unopened">
-					<img src="@/assets/icon_saoyisao@2x.png"/>
-					<p id="">
-						扫一下
-					</p>
-				</li>
-				<router-link to="transfer">
+				<router-link to="/unopened">
+					<li>
+						<img src="@/assets/icon_saoyisao@2x.png"/>
+						<p id="">
+							扫一下
+						</p>
+					</li>
+				</router-link>
+				<router-link to="/unopened">
 					<li>
 						<img src="@/assets/icon_zhuangzhang@2x.png"/>
 						<p id="">
@@ -16,12 +19,14 @@
 						</p>
 					</li>
 				</router-link>
-				<li>
-					<img src="@/assets/icon_shoukuan@2x.png"/>
-					<p id="">
-						收款
-					</p>
-				</li>
+				<router-link to="/unopened">
+					<li>
+						<img src="@/assets/icon_shoukuan@2x.png"/>
+						<p id="">
+							收款
+						</p>
+					</li>
+				</router-link>
 			</ul>
 		</div>
 		<div class="notice">
@@ -182,14 +187,13 @@
 		    onChange(index) {
 		      Toast('当前 Swipe 索引：' + index);
     		},
-    		linkmairu () {
-    			this.$router.push({path:'/integralTrans'})
-    		},
-    		linkmaichu () {
-    			this.$router.push({path:'/integerSaleMain'})
-    		},
-    		store(){
-    			
+//  		linkmairu () {
+//  			this.$router.push({path:'/integralTrans'})
+//  		},
+//  		linkmaichu () {
+//  			this.$router.push({path:'/integerSaleMain'})
+//  		},
+    		store(){    			
     			this.$router.push({path:'/onlineStore'});
     		},
 //  		未开放提示

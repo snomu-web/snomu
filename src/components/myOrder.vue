@@ -52,6 +52,7 @@
 
 <script>
 	import { NavBar } from 'vant';
+	import { Toast } from 'vant'
 	import { Stepper } from 'vant';
 	import { SubmitBar } from 'vant';
 	import { Checkbox, CheckboxGroup } from 'vant';
