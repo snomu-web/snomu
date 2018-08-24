@@ -211,7 +211,7 @@
 		    	}
 		    	let resul = that.result
 		    	let list = that.list
-		    	if (JSON.stringify(resul) == JSON.stringify(list)) {
+		    	if ((resul.length == list.length) && list.length > 0) {
 		    		that.checked = true
 		    	} else {
 		    		that.checked = false
@@ -228,7 +228,13 @@
 			        })
 			    }).then(res => {
 			    	if(res.data.code == 0){
-			    		that.list.splice(index,1)
+			    		let list = that.list
+				    	let resul = that.result
+						var indexDel = resul.indexOf(list[index])
+						if (indexDel > -1) {
+						   	that.price -= list[index].amount * list[index].price + list[index].amount * list[index].freightCharge		    		
+						}
+				    	list.splice(index,1)
 			    	}else{
 			    		Toast(res.data.msg)		    		
 			    	}
@@ -239,14 +245,14 @@
 		    	if (e) {
 		    		this.result = this.list
 		    	} else {
-		    		if (this.result.length == 0) {
+		    		if (this.result.length == this.list.length) {
 		    			this.result = []
 		    		}
 		    	}
 		    },
 		    //支付弹窗
 	       	beforeClose(action, done) {
-	       		let that = this
+	       		let that = this	       		
 		      	if (action === 'confirm') {
 		        	that.onSubmit()
 		        	done()
@@ -256,7 +262,7 @@
     		},
 		    //结算
 		    onSubmit () {
-		    	let that = this
+		    	let that = this		    	
 		    	let order = {}
 		    	let orderDetails = []
 		    	for (let i = 0; i < that.result.length; i++) {
