@@ -6,7 +6,7 @@
 				<li v-for="item in items" @click="goGoods(item.itemId)">
 					<!--<router-link to="goodDetails">-->
 						<div class="storeimg">
-							<img :src="item.itemUrlNew"/>
+							<img :src="item.itemUrlNew.split(',')[0]"/>
 						</div>
 						<div class="store-details">
 							<p>{{item.itemDescribe}}</p>
@@ -15,29 +15,6 @@
 							¥{{item.price}}
 						</span>								
 				</li>
-				<li>
-					<div class="storeimg">
-						<img src="../assets/hcicon@3x.png"/>
-					</div>
-					<div class="store-details">
-						<p>fj加深对佛刻录机 死定了房间饭就色东方</p>
-					</div>
-					<span class="money">
-						¥13
-					</span>
-				</li>
-				<li>
-					<div class="storeimg">
-						<img src="../assets/hcicon@3x.png"/>
-					</div>
-					<div class="store-details">
-						<p>fj加深对佛刻录机 死定了房间饭就色东方</p>
-					</div>
-					<span class="money">
-						¥14
-					</span>
-				</li>
-				
 			</ul>
 		</div>
 	</div>
@@ -56,7 +33,14 @@
 		created() {
 			this.gain()
 		},
-		methods: {		
+		methods: {
+			handleChange(event, type) {
+			    let val = event
+			    let change = {};
+			    change[type] = val;
+			    console.log(change)
+//			    this.setState(change);
+			},
 			onClickLeft() {
 				history.go(-1)
 			},
@@ -78,8 +62,7 @@
 			        }
 			      })
 			},
-			goGoods(id){
-				
+			goGoods(id){				
 				this.$router.push({path:'/goodDetails',query:{'id':id}});
 				console.log(id)
 			}
