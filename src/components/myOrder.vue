@@ -35,7 +35,7 @@
 					</span>				
 				</div>			
 				<div class="commodity-details" v-for="a in item.orderDetail">
-					<img :src="a.imgUrl"/>
+					<img :src="a.imgUrl.split(',')[0]"/>
 					<div class="commodity-details-right">
 						<p class="comname">{{a.itemName}}</p>
 						<p class="com-del-hint">{{a.itemDescribe}}</p> 

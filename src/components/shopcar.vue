@@ -144,6 +144,8 @@
 			    				that.address = res.data.data[i].province + res.data.data[i].city + res.data.data[i].region + res.data.data[i].shippingAddress 
 			    			}
 			    		}
+			    		console.log(that.address)
+			    		console.log(that.addre)
 			    	}else{
 			    		Toast(res.data.msg)		    		
 			    	}
@@ -301,14 +303,24 @@
 		    	that.cartId = that.cartId.join(',')
 		    	let jsonData={
 		        	userId: localStorage.getItem('userId'),
-		        	name: that.name,
-		        	cellphone: that.cellphone,
-		        	address: that.address,
+//		        	name: that.name,
+//		        	cellphone: that.cellphone,
+//		        	address: that.address,
 		        	payPrice: that.payPrice,
 		        	postage: that.postage,
 		        	payPwd: that.payPwd,
 		        	cartId: that.cartId
 			    }
+		    	if(that.addre==''){
+		    		jsonData['address']=that.address
+		    		jsonData['cellphone']=that.cellphone
+		    		jsonData['name']=that.name
+		    	}else{
+		    		jsonData['address']=that.addre.province + that.addre.city + that.addre.shippingAddress
+		    		jsonData['cellphone']=that.addre.phone
+		    		jsonData['name']=that.addre.name
+		    	}
+		    	console.log(that.address)
 		    	for (var i = 0; i < orderDetails.length; i++) {
 		    		jsonData["orderDetails["+i+"].itemId"] = orderDetails[i].itemId
 		    		jsonData["orderDetails["+i+"].quantity"] = orderDetails[i].quantity
