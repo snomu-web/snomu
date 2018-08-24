@@ -133,7 +133,7 @@
 		</div>
 		<div class="heard">
 			<van-swipe :autoplay="3000">
-			  <van-swipe-item v-for="data in datas">
+			  <van-swipe-item v-for="(data, index) in datas" :key='index'>
 			  	<img class="swip_img" :src="data.imgUrl"/>
 			  </van-swipe-item>	  
 			</van-swipe>
