@@ -52,9 +52,9 @@
 			        })
 			      }).then(res => {
 			        if (res.data.code == 0) {
-			        	var imgs  =res.data.data[2].itemUrlNew
-			        	let arr = imgs.split(",")
-			        	this.itemUrlNew = arr[0]
+//			        	var imgs  =res.data.data[2].itemUrlNew
+//			        	let arr = imgs.split(",")
+//			        	this.itemUrlNew = arr[0]
 			          	this.items = res.data.data
 			        } else {
 			          Toast(res.data.msg || '查询失败')
