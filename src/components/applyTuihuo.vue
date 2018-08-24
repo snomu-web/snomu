@@ -13,7 +13,7 @@
 			<img class="shopcar-no-img" src="@/assets/zwpic@2x.png"/>
 			<p>您还未在平台购买过商品～</p>
 		</div>-->
-		<div class="commodity" v-if="item in items">
+		<div class="commodity">
 			<div class="commodity-order">
 				<span id="com-ord-num">
 					订单号:1597421453132
@@ -30,9 +30,9 @@
 					代发货
 				</span>-->
 				
-				<span id="com-wl-sj" @click="apply(item.id)">
+				<!--<span id="com-wl-sj" @click="apply(item.id)">
 					申请退货
-				</span>
+				</span>-->
 			</div>			
 			<div class="commodity-details">
 				<img src="../assets/fdicon@2x.png"/>
@@ -48,7 +48,18 @@
 				</div>
 			</div>
 		</div>
-		
+		<p class="th-line th-wuliu">
+			<span  class="th-lineleft" id="th-wuliu-left">
+				物流单号
+			</span>
+			<input type="text" name="th-wuliu-left" id="th-wuliu-right" value="" placeholder="请输入物流单号"/>
+		</p>
+		<p class="th-line th-beizhu">
+			<span class="th-lineleft" id="th-beizhu-left">
+				备注
+			</span>
+			<input type="text" name="th-beizhu-left" id="th-beizhu-right" value="" placeholder="请填写备注"/>
+		</p>
 	</div>
 	
 </template>
@@ -74,7 +85,7 @@
 		methods: {
 			gainOrder(){
 				this.$axios({
-			        url: '/api/app/orders/queryOrder',
+			        url: '',
 			        method: 'POST',
 			        data: qs.stringify({
 			          	userId: localStorage.getItem('userId'),
@@ -215,6 +226,34 @@ color: #777777;
 	background-color: #FFFFFF;
 	position: fixed;
 	bottom: 1rem;
+}
+.th-line{
+	height: 0.96rem;
+	line-height: 0.96rem;
+	font-size: 0.28rem;
+	background-color: #FFFFFF;
+	margin-top: 0.2rem;
+	padding: 0 0.3rem;
+}
+.th-lineleft{
+	font-size: 0.28rem;
+	color: #000000;
+}
+#th-wuliu-left{
+
+}
+#th-wuliu-right{
+	float: right;
+	border: none;
+	color: #9B9B9B;
+	text-align: right;
+}
+
+#th-beizhu-right{
+	float: right;
+	border: none;
+	color: #9B9B9B;
+	text-align: right;
 }
 /*无商品*/
 .shopcar-no{text-align: center;font-size: .3rem;color: #888888;height: 100%;background: #fff;}

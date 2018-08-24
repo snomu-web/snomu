@@ -33,6 +33,7 @@ import OnlineStore from '@/components/onlineStore'
 import GoodDetails from '@/components/goodDetails'
 import MyOrder from '@/components/myOrder'
 import Tuihuo from '@/components/tuihuo'
+import ApplyTuihuo from '@/components/applyTuihuo'
 
 Vue.use(Router)
 
@@ -72,6 +73,7 @@ const router = new Router({
     {path: '/goodDetails',name: 'goodDetails',component: GoodDetails,meta: {title: '商品详情'}},
     {path: '/myOrder',name: 'myOrder',component: MyOrder,meta: {title: '我的订单'}},
     {path: '/tuihuo',name: 'tuihuo',component: Tuihuo,meta: {title: '退货单'}},
+    {path: '/applyTuihuo',name: 'applyTuihuo',component: ApplyTuihuo,meta: {title: '申请退货'}},
   ]
 })
 
