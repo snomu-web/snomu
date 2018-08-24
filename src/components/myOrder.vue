@@ -13,40 +13,37 @@
 			<img class="shopcar-no-img" src="@/assets/zwpic@2x.png"/>
 			<p>您还未在平台购买过商品～</p>
 		</div>-->
-		<div class="commodity" v-if="item in items">
+		<div class="commodity" v-for="item in items">
 			<div class="commodity-order">
 				<span id="com-ord-num">
-					订单号:1597421453132
+					订单号:{{item.orderNo}}
 				</span>
 				<span id="com-ord-sj">
-					25-5-4
+					{{item.orderTime}}
 				</span>
 			</div>
-			<div class="commodity-wuliu">
-				<span id="com-wl-num">
-					物流单号:1597421453132
-				</span>
-				<!--<span id="com-wl-sj">
-					代发货
-				</span>-->
-				
-				<span id="com-wl-sj" @click="apply(item.id)">
-					申请退货
-				</span>
-			</div>			
-			<div class="commodity-details">
-				<img src="../assets/fdicon@2x.png"/>
-				<div class="commodity-details-right">
-					<p class="com-del-hint">师德师风东方闪电第三方士大夫 饭搜地方搜地方发送到地方胜多负少的水电费水电费发送到饭搜地方搜地方搜地方沙发斯蒂芬 收到</p>
-					<p class="com-del-bq"><span class="com-del-bq-left">明星产品</span><span class="com-del-bq-yf">568元</span></p>
-					<p class="com-del-num">
-						<span class="danjia">¥12</span>
-						<span id="stepper">
-							<van-stepper v-model="value" />
-						</span>
-					</p>
+			<div class="orders" >
+				<div class="commodity-wuliu">
+					<span id="com-wl-num">
+						物流单号:{{item.returnExpressNo}}
+					</span>				
+					<span id="com-wl-zt">
+						{{item.expressNo}}
+					</span>					
+					<span id="com-wl-th" v-if="item.isReturn == 1" @click="apply(item)">
+						退货
+					</span>				
+				</div>			
+				<div class="commodity-details" v-for="a in item.orderDetail">
+					<img :src="a.imgUrl"/>
+					<div class="commodity-details-right">
+						<p class="comname">{{a.itemName}}</p>
+						<p class="com-del-hint">{{a.itemDescribe}}</p> 
+						<p class="com-del-bq"><span class="com-del-bq-left">¥{{a.payPrice}}元</span><span class="com-del-bq-yf">{{a.postage}}元</span></p>						
+					</div>
 				</div>
 			</div>
+			
 		</div>
 		
 	</div>
@@ -63,6 +60,7 @@
 		data(){
 			return{
 				value: 1,
+				img:"",
 				items:[],
 				
 			}
@@ -93,8 +91,8 @@
 		    onClickRight() {
 		      	this.$router.push({path:'/tuihuo'})
 		    },
-		    apply(){
-		    	this.$router.push({path:'/applyTuihuo'})
+		    apply(e){
+		    	this.$router.push({path:'/applyTuihuo',query:{'item':JSON.stringify(e)}})
 		    },
 		    onSubmit(){
 		    	
@@ -109,10 +107,13 @@
 	height: 100%;
 	background-color: #F5F5F5;
 }
+.comname{
+	font-size: 0.28rem;
+color: #000000;
+}
 /*商品列表*/
 .commodity{
 	width: 100%;
-	height: 3.52rem;
 	margin: 0 auto;
 	background-color: #FFFFFF;
 	margin-top: 0.2rem;
@@ -144,16 +145,29 @@ color: #777777;
 	font-size: 0.26rem;
 	color: #4A4A4A;
 }
-#com-wl-sj{
+#com-wl-zt{
 	float: right;
 	font-size: 0.26rem;
 	color: #777777;
 	
 }
+#com-wl-th{
+	height: 0.48rem;
+    width: 0.88rem;
+    line-height: 0.48rem;
+    text-align: center;
+    float: right;
+    margin-top: 0.1rem;
+    font-size: 0.26rem;
+    color: #559eec;
+    border: 1px solid #B9CDFF;
+    box-sizing: border-box;
+}
 .commodity-details{
 	width: 100%;
 	height: 1.76rem;
 	padding: 0 0.3rem;
+	margin-bottom: 0.2rem;
 }
 .commodity-details img{
 	width: 2.22rem;

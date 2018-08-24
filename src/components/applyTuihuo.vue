@@ -1,12 +1,10 @@
 <template>
 	<div class="shopcar">
 		<van-nav-bar
-		  title="我的订单"
+		  title="申请退货"
 		  left-text="返回"
-		  right-text="退货单"
 		  left-arrow
 		  @click-left="onClickLeft"
-		  @click-right="onClickRight"
 		/>
 		<!--<div class="shopcar-no">
 			<van-nav-bar title="购物车"/>
@@ -16,50 +14,48 @@
 		<div class="commodity">
 			<div class="commodity-order">
 				<span id="com-ord-num">
-					订单号:1597421453132
+					订单号:{{datas.orderNo}}
 				</span>
 				<span id="com-ord-sj">
-					25-5-4
+					{{datas.orderTime}}
 				</span>
 			</div>
-			<div class="commodity-wuliu">
-				<span id="com-wl-num">
-					物流单号:1597421453132
-				</span>
-				<!--<span id="com-wl-sj">
-					代发货
-				</span>-->
-				
-				<!--<span id="com-wl-sj" @click="apply(item.id)">
-					申请退货
-				</span>-->
-			</div>			
-			<div class="commodity-details">
-				<img src="../assets/fdicon@2x.png"/>
-				<div class="commodity-details-right">
-					<p class="com-del-hint">师德师风东方闪电第三方士大夫 饭搜地方搜地方发送到地方胜多负少的水电费水电费发送到饭搜地方搜地方搜地方沙发斯蒂芬 收到</p>
-					<p class="com-del-bq"><span class="com-del-bq-left">明星产品</span><span class="com-del-bq-yf">568元</span></p>
-					<p class="com-del-num">
-						<span class="danjia">¥12</span>
-						<span id="stepper">
-							<van-stepper v-model="value" />
-						</span>
-					</p>
+			<div class="orders" >
+				<div class="commodity-wuliu">
+					<span id="com-wl-num">
+						物流单号:{{datas.returnExpressNo}}
+					</span>						
+				</div>			
+				<div class="commodity-details" v-for="a in datas.orderDetail">
+					<img :src="a.imgUrl"/>
+					<div class="commodity-details-right">
+						<p class="comname">辣条</p>
+						<p class="com-del-hint">{{a.itemDescribe}}</p> 
+						<p class="com-del-bq"><span class="com-del-bq-left">¥{{a.payPrice}}元</span><span class="com-del-bq-yf">{{a.postage}}元</span></p>						
+					</div>
 				</div>
 			</div>
+			
 		</div>
 		<p class="th-line th-wuliu">
 			<span  class="th-lineleft" id="th-wuliu-left">
 				物流单号
 			</span>
-			<input type="text" name="th-wuliu-left" id="th-wuliu-right" value="" placeholder="请输入物流单号"/>
+			<input type="text" v-model="wlnumber" name="th-wuliu-left" id="th-wuliu-right" value="" placeholder="请输入物流单号"/>
 		</p>
 		<p class="th-line th-beizhu">
 			<span class="th-lineleft" id="th-beizhu-left">
 				备注
 			</span>
-			<input type="text" name="th-beizhu-left" id="th-beizhu-right" value="" placeholder="请填写备注"/>
+			<input type="text" v-model="remark" name="th-beizhu-left" id="th-beizhu-right" value="" placeholder="请填写备注"/>
 		</p>
+		<div class="tijiao" v-if= "wlnumber && remark" @click="yes">
+			提交
+		</div>
+		
+		<div class="notitijiao" v-else>
+			提交
+		</div>
 	</div>
 	
 </template>
@@ -68,47 +64,44 @@
 	import { NavBar } from 'vant';
 	import { Stepper } from 'vant';
 	import { SubmitBar } from 'vant';
+	import { Toast } from 'vant';
 	import { Checkbox, CheckboxGroup } from 'vant';
 	import qs from 'qs';
 	export default({
 		data(){
 			return{
 				value: 1,
-				items:[],
-				
+				datas:"",
+				wlnumber:"",
+				remark:"",
 			}
 		},		
 		name: 'shopcar',
 		created() {
-			this.gainOrder()
+			this.datas = JSON.parse(this.$route.query.item)
 		},
 		methods: {
-			gainOrder(){
-				this.$axios({
-			        url: '',
+		    onClickLeft() {
+		    	history.go(-1)
+		    },
+//		    提交退货单
+		    yes(){
+		    	let that = this
+		    	this.$axios({
+			        url: '/api/app/orders/returnOrder',
 			        method: 'POST',
 			        data: qs.stringify({
-			          	userId: localStorage.getItem('userId'),
+			          	orderId:that.datas.orderNo,
+			          	returnNum:that.wlnumber,
+			          	reason:that.remark,
 			        })
 			      }).then(res => {
 			        if (res.data.code == 0) {
-			        	this.items = res.data.data
+			        	Toast(res.data.msg)
 			        } else {
 			          	Toast(res.data.msg || '查询失败')
 			        }
 			      })
-			},
-		    onClickLeft() {
-		    	history.go(-1)
-		    },
-		    onClickRight() {
-		      	this.$router.push({path:'/tuihuo'})
-		    },
-		    apply(){
-		    	this.$router.push({path:'/applyTuihuo'})
-		    },
-		    onSubmit(){
-		    	
 		    }
 		}
 	})
@@ -120,10 +113,13 @@
 	height: 100%;
 	background-color: #F5F5F5;
 }
+.comname{
+	font-size: 0.28rem;
+color: #000000;
+}
 /*商品列表*/
 .commodity{
 	width: 100%;
-	height: 3.52rem;
 	margin: 0 auto;
 	background-color: #FFFFFF;
 	margin-top: 0.2rem;
@@ -138,7 +134,7 @@
 }
 #com-ord-num{
 	font-size: 0.28rem;
-color: #000000;
+	color: #000000;
 }
 #com-ord-sj{
 	float: right;
@@ -165,6 +161,7 @@ color: #777777;
 	width: 100%;
 	height: 1.76rem;
 	padding: 0 0.3rem;
+	margin-bottom: 0.2rem;
 }
 .commodity-details img{
 	width: 2.22rem;
@@ -254,6 +251,32 @@ color: #777777;
 	border: none;
 	color: #9B9B9B;
 	text-align: right;
+}
+.tijiao{
+	width: 6.9rem;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	background: linear-gradient(135deg, #FD944A 0%, #FD3D54 100%);
+	text-align: center;
+	position: fixed;
+	bottom: 0.6rem;
+	left: 50%;
+	margin-left: -3.45rem;
+	color: #FFFFFF;
+	border-radius: 0.44rem;
+}
+.notitijiao{
+	width: 6.9rem;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	background-color: #FFB2B0;
+	text-align: center;
+	position: fixed;
+	bottom: 0.6rem;
+	left: 50%;
+	margin-left: -3.45rem;
+	color: #FFFFFF;
+	border-radius: 0.44rem;
 }
 /*无商品*/
 .shopcar-no{text-align: center;font-size: .3rem;color: #888888;height: 100%;background: #fff;}

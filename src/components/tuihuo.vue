@@ -5,41 +5,39 @@
 		  left-text="返回"
 		  left-arrow
 		  @click-left="onClickLeft"
-		  @click-right="onClickRight"
 		/>
 		<!--<div class="shopcar-no">
 			<van-nav-bar title="购物车"/>
 			<img class="shopcar-no-img" src="@/assets/zwpic@2x.png"/>
 			<p>您还未在平台购买过商品～</p>
 		</div>-->
-		<div class="commodity">
+		<div class="commodity" v-for="data in datas">
 			<div class="commodity-order">
 				<span id="com-ord-num">
-					关联订单号:1597421453132
+					订单号:{{data.orderNo}}
 				</span>
 				<span id="com-ord-sj">
-					25-5-4
+					{{data.orderTime}}
 				</span>
 			</div>
 			<div class="commodity-wuliu">
 				<span id="com-wl-num">
-					物流单号:1597421453132
-				</span>
-				<span id="com-wl-sj">
-					发货
-				</span>
+					物流单号:{{data.returnExpressNo}}
+				</span>				
+				<span id="com-wl-sj" v-if="data.status == 0">未支付</span>
+				<span id="com-wl-sj" v-if="data.status == 1">已支付(待发货)</span>
+				<span id="com-wl-sj" v-if="data.status == 2">已发货</span>
+				<span id="com-wl-sj" v-if="data.status == 3">已收货</span>
+				<span id="com-wl-sj" v-if="data.status == 4">退货中</span>
+				<span id="com-wl-sj" v-if="data.status == 5">退货完成</span>
 			</div>			
-			<div class="commodity-details">
+			<div class="commodity-details" v-for="a in data.orderDetail">
 				<img src="../assets/fdicon@2x.png"/>
 				<div class="commodity-details-right">
-					<p class="com-del-hint">师德师风东方闪电第三方士大夫 饭搜地方搜地方发送到地方胜多负少的水电费水电费发送到饭搜地方搜地方搜地方沙发斯蒂芬 收到</p>
-					<p class="com-del-bq"><span class="com-del-bq-left">明星产品</span><span class="com-del-bq-yf">568元</span></p>
-					<p class="com-del-num">
-						<span class="danjia">¥12</span>
-						<span id="stepper">
-							<van-stepper v-model="value" />
-						</span>
-					</p>
+					<p class="comname">{{a.itemName}}</p>
+					<p class="com-del-hint">{{a.itemDescribe}}</p>
+					<p class="com-del-bq"><span class="com-del-bq-left">¥{{a.payPrice}}元</span><span class="com-del-bq-yf">{{a.postage}}元</span></p>
+					
 				</div>
 			</div>
 		</div>
@@ -52,26 +50,38 @@
 	import { Stepper } from 'vant';
 	import { SubmitBar } from 'vant';
 	import { Checkbox, CheckboxGroup } from 'vant';
+	import qs from 'qs';
 	export default({
 		data(){
 			return{
 				value: 1,
-				danChecked:true,
-				checked: true
+				datas:[],
 			}
 		},
 		
 		name: 'shopcar',
+		created() {
+			this.tuihuo()
+		},
 		methods: {
 		    onClickLeft() {
 		    	history.go(-1)
 		    },
-		    onClickRight() {
-		      	Toast('我的订单');
-		      	this.$router.push({path:'/myOrder'})
-		    },
-		    onSubmit(){
-		    	
+//		    退货订单查询
+		    tuihuo(){
+		    	this.$axios({
+			        url: '/api/app/orders/queryReturnOrder',
+			        method: 'POST',
+			        data: qs.stringify({
+			          	userId: localStorage.getItem('userId'),
+			        })
+			      }).then(res => {
+			        if (res.data.code == 0) {
+			        	this.datas = res.data.data
+			        } else {
+			          	Toast(res.data.msg || '查询失败')
+			        }
+			      })
 		    }
 		}
 	})
@@ -83,10 +93,13 @@
 	height: 100%;
 	background-color: #F5F5F5;
 }
+.comname{
+	font-size: 0.28rem;
+color: #000000;
+}
 /*商品列表*/
 .commodity{
 	width: 100%;
-	height: 3.52rem;
 	margin: 0 auto;
 	background-color: #FFFFFF;
 	margin-top: 0.2rem;
@@ -128,6 +141,7 @@ color: #777777;
 	width: 100%;
 	height: 1.76rem;
 	padding: 0 0.3rem;
+	margin-bottom: 0.2rem;
 }
 .commodity-details img{
 	width: 2.22rem;
