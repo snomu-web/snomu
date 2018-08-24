@@ -112,6 +112,9 @@
 				let addCheck = this.$route.query.addre
 				this.addre = JSON.parse(addCheck)
 			}
+			let that = this
+//			JSON.parse(localStorage.getItem('result'))[0].id
+			
 		},
 		methods: {
 		    onClickRight() {
@@ -201,6 +204,14 @@
 			    }).then(res => {
 			    	if(res.data.code == 0){
 			    		that.list = res.data.data
+			    		let arr = JSON.parse(localStorage.getItem('result'))
+						for (let i = 0; i < arr.length; i++) {
+							for (let j = 0; j < res.data.data.length; j++) {
+								if (arr[i].id == res.data.data[j].id) {
+									that.result.push(res.data.data[j])						
+								}
+							}
+						}
 			    	}else{
 			    		Toast(res.data.msg)		    		
 			    	}
@@ -269,6 +280,7 @@
 		    	let that = this		    	
 		    	let order = {}
 		    	let orderDetails = []
+		    	that.cartId = []
 		    	for (let i = 0; i < that.result.length; i++) {
 		    		that.payPrice += that.result[i].amount * that.result[i].price
 		    		that.postage += that.result[i].amount * that.result[i].freightCharge
