@@ -314,6 +314,7 @@
 			        method: 'POST',
 			        data: qs.stringify(jsonData)
 			    }).then(res => {
+			    	localStorage.removeItem('result')
 			    	if(res.data.code == 0){
 			    		that.getShop ()
 			    	}else{
