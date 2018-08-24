@@ -150,6 +150,7 @@
 
 <script>
 	import { Stepper } from 'vant';
+	import { Toast } from 'vant'
 	import qs from 'qs';
 	export default({
 		name:'home',
