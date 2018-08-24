@@ -204,14 +204,16 @@
 			    }).then(res => {
 			    	if(res.data.code == 0){
 			    		that.list = res.data.data
-			    		let arr = JSON.parse(localStorage.getItem('result'))
-						for (let i = 0; i < arr.length; i++) {
-							for (let j = 0; j < res.data.data.length; j++) {
-								if (arr[i].id == res.data.data[j].id) {
-									that.result.push(res.data.data[j])						
+			    		if (localStorage.getItem('result')) {
+				    		let arr = JSON.parse(localStorage.getItem('result'))
+							for (let i = 0; i < arr.length; i++) {
+								for (let j = 0; j < res.data.data.length; j++) {
+									if (arr[i].id == res.data.data[j].id) {
+										that.result.push(res.data.data[j])						
+									}
 								}
-							}
-						}
+							}			    			
+			    		}
 			    	}else{
 			    		Toast(res.data.msg)		    		
 			    	}
