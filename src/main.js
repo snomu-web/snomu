@@ -13,9 +13,9 @@ Vue.use(Vant)
 Vue.prototype.$axios = axios
 
 // 全局请求头
-if (localStorage.getItem('myPhone') && localStorage.getItem('myId')) {
-	axios.defaults.headers.post['X-With-USER_PHONE'] = localStorage.getItem('myPhone')
-	axios.defaults.headers.post['X-With-CLIENTID'] = localStorage.getItem('myId')
+if (localStorage.getItem('userName') && localStorage.getItem('cookId')) {
+	axios.defaults.headers.post['X-With-USER_PHONE'] = localStorage.getItem('userName')
+	axios.defaults.headers.post['X-With-CLIENTID'] = localStorage.getItem('cookId')
 }
 
 // Add a response interceptor
