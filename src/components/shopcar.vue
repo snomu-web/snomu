@@ -144,8 +144,6 @@
 			    				that.address = res.data.data[i].province + res.data.data[i].city + res.data.data[i].region + res.data.data[i].shippingAddress 
 			    			}
 			    		}
-			    		console.log(that.address)
-			    		console.log(that.addre)
 			    	}else{
 			    		Toast(res.data.msg)		    		
 			    	}
@@ -218,7 +216,6 @@
 							}			    			
 			    		}
 			    		for (let i = 0; i < res.data.data.length; i++) {
-			    			console.log(res.data.data[i].url)
 			    		}
 			    	}else{
 			    		Toast(res.data.msg)		    		
@@ -288,6 +285,10 @@
 		    	let that = this		    	
 		    	let order = {}
 		    	let orderDetails = []
+		    	if(that.addre==''){		    		
+		    		Toast("请设置地址")	
+		    		return false
+		    	}
 		    	that.cartId = []
 		    	for (let i = 0; i < that.result.length; i++) {
 		    		that.payPrice += that.result[i].amount * that.result[i].price
@@ -320,7 +321,6 @@
 		    		jsonData['cellphone']=that.addre.phone
 		    		jsonData['name']=that.addre.name
 		    	}
-		    	console.log(that.address)
 		    	for (var i = 0; i < orderDetails.length; i++) {
 		    		jsonData["orderDetails["+i+"].itemId"] = orderDetails[i].itemId
 		    		jsonData["orderDetails["+i+"].quantity"] = orderDetails[i].quantity

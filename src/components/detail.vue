@@ -2,18 +2,37 @@
 	<div class="detail">
 		<van-nav-bar title="账单明细" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="box">
-			<div class="flex_between_v top">
-				<p class="til_p1">{{ msg }}</p>
-				<p class="til_p2">{{ tixianIncome }}</p>
-			</div>
-			<div class="flex_between">
-				<p class="con_p1">扣款详情：</p>
-				<div class="">
-					<p class="con_p2">购物积分 <span>{{ shopIncome }}</span></p>
-					<p class="con_p2">提现积分 <span>{{ tixianIncome }}</span></p>
-					<p class="con_p2">余额 <span>{{ balanceIncome }}</span></p>
+			
+			<div class="" v-if="this.sign = 0">
+				<div class="flex_between_v top">
+					<p class="til_p1">{{ msg }}</p>
+					<p class="til_p2">{{ shopExpend }}</p>
+				</div>
+				<div class="flex_between">
+					<p class="con_p1">扣款详情：</p>
+					<div class="">
+						<p class="con_p2">购物积分 <span>{{ shopExpend }}</span></p>
+						<p class="con_p2">提现积分 <span>{{ tixianExpand }}</span></p>
+						<p class="con_p2">余额 <span>{{ balanceExpend }}</span></p>
+					</div>
 				</div>
 			</div>
+			
+			<div class="" v-if="this.sign = 1">
+				<div class="flex_between_v top">
+					<p class="til_p1">{{ msg }}</p>
+					<p class="til_p2">{{ shopIncome }}</p>
+				</div>
+				<div class="flex_between">
+					<p class="con_p1">扣款详情：</p>
+					<div class="">
+						<p class="con_p2">购物积分 <span>{{shopIncome }}</span></p>
+						<p class="con_p2">提现积分 <span>{{ tixianIncome }}</span></p>
+						<p class="con_p2">余额 <span>{{ balanceIncome }}</span></p>
+					</div>
+				</div>
+			</div>
+			
 			<div class="bom">
 				<div class="flex_between_v">
 					<p class="bom_p1">分类：</p>					
@@ -53,21 +72,26 @@
 		name: 'detail',
 		data () {
 			return {
-				id: '000000000000000',			//账单编号
+				id: '',			//账单编号
 				sign: '',						//收入支出 0支出 1收入
 				msg: '',						//名称
-				balanceIncome: 0,				//余额
+				balanceExpend: 0,				//余额
 				currencyType: 1,				//支持货币种类
-				fixIncome: 0,					//期权
+				shopExpend: 0,					//购物积分
+				tixianExpand: 0,				//提现积分
+				transactionType: '1',			//分类
+				createTime: 0,					//时间			
+
+				balanceIncome: 0,				//余额
 				shopIncome: 0,					//购物积分
 				tixianIncome: 0,				//提现积分
-				transactionType: '1',			//分类
-				createTime: 0,					//时间
+
+
 			}
 		},
 		created () {
 			this.id = this.$route.query.id
-			if (this.$route.query.sign > 0) {
+			if (this.$route.query.shop > 0) {
 				this.sign = 1
 			} else {
 				this.sign = 0
@@ -97,10 +121,15 @@
 			    		that.balanceIncome = res.data.data.balanceIncome
 			    		that.createTime = res.data.data.createTime
 			    		that.currencyType = res.data.data.currencyType
-			    		that.fixIncome = res.data.data.fixIncome
 			    		that.shopIncome = res.data.data.shopIncome
 			    		that.tixianIncome = res.data.data.tixianIncome
 			    		that.transactionType = res.data.data.transactionType
+
+	
+			    		that.shopIncome = res.data.data.shopExpend
+			    		that.tixianIncome = res.data.data.tixianExpend
+			    		that.balanceIncome = res.data.data.balanceExpend
+			    		
 			    	}else{
 			    		Toast(res.data.msg)		    		
 			    	}

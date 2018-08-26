@@ -125,7 +125,7 @@
 		name: 'mine',
 		data () {
 			return {
-				tel: '11111111111',					//客服
+				tel: '',					//客服
 				tela: '',							//客服
 				gradeName: '会员',					//会员等级
 				headPic: '',						//用户头像
@@ -136,7 +136,7 @@
 				tixianIntegral: 0,					//转出积分
 				todayIncome: 0,						//今日收益
 				totalIncomeIntegral: 0,				//累计收益
-				phone: 11111111111,					//用户
+				phone: '',					//用户
 				show: false
 			}
 		},

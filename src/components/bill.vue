@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<van-list class="all list_box" v-model="loading" :finished="finished" @load="onLoad">
-			<div class="list" v-for="(item, index) in list" :key='index' @click="detail(item.id,item.tixianIncome)">
+			<div class="list" v-for="(item, index) in list" :key='index' @click="detail(item.id,item.tixianIncome,item.shopIncome)">
 				<div class="flex_between_v list_p">
 					<p class="list_p1">{{ item.msg }}</p>
 					<p class="list_p2" v-if="item.tixianIncome <= 0">{{ item.tixianIncome + item.balanceIncome + item.shopIncome + item.fixIncome }}</p>
@@ -116,8 +116,8 @@
 			    })
 			},
 	        //订单详情
-	        detail (e, a) {	        	
-	        	this.$router.push({path: '/detail'})
+	        detail (e, a, s) {	        	
+	        	this.$router.push({path: '/detail',query:{id:e,shop:s}})
 	        }
 		}
 	}

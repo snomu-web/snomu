@@ -13,18 +13,24 @@ Vue.use(Vant)
 Vue.prototype.$axios = axios
 
 // 全局请求头
-if (localStorage.getItem('userName') && localStorage.getItem('cookId')) {
-	axios.defaults.headers.post['X-With-USER_NAME'] = localStorage.getItem('userName')
-	axios.defaults.headers.post['X-With-CLIENTID'] = localStorage.getItem('cookId')
-}
+axios.interceptors.request.use(function (config) {    // 这里的config包含每次请求的内容
+    config.headers['X-With-USER_NAME'] = localStorage.getItem('userName')
+    config.headers['X-With-CLIENTID'] = localStorage.getItem('cookId')
+    return config;
+}, function (err) {
+    return Promise.reject(err);
+})
 
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
+	if(response.config.url.indexOf("login") !== -1){
+		localStorage.clear()
+	}
   return response
 }, function (error) {
 if (303 == error.response.status) {
     // ElementUI.Message.error("session过期，请登录！");
-    delCookie("username")
+    localStorage.clear()
     router.push({path: '/login'})
 }
   return Promise.reject(error)
