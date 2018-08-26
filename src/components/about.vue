@@ -2,9 +2,9 @@
 	<div class="about">
 		<van-nav-bar title="关于" left-text="返回" left-arrow @click-left="onClickLeft"/>
 		<div class="box">
-			<img class="img" src="@/assets/logo@3x.png"/>
-			<p class="lev">神农牧1.1版本</p>
-			<p class="con">神农牧以人为中心，想人之所想，为人民服务，一切为了人民。所以我们只要有缺点，就不怕别人批评指出。不管是什么人谁向我们指出都行。只要你说得对，我们就改正。</p>			
+			<img class="img" src="@/assets/甲@2x.png"/>
+			<p class="lev">甲乙丙1.1版本</p>
+			<p class="con">甲乙丙以人为中心，想人之所想，为人民服务，一切为了人民。所以我们只要有缺点，就不怕别人批评指出。不管是什么人谁向我们指出都行。只要你说得对，我们就改正。</p>			
 		</div>
 	</div>
 </template>

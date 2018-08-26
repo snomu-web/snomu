@@ -40,17 +40,18 @@ import Unopened from '@/components/unopened'
 Vue.use(Router)
 
 const router = new Router({
+	mode: 'history',
   routes: [
   	{path: '/',name: 'login',component: Login,meta: {title: '登录'}},
     {path: '/regist',name: 'regist',component: Regist,meta: {title: '注册'}},
     {path: '/agreement',name: 'agreement',component: Agreement,meta: {title: '用户协议'}},
     {path: '/forget',name: 'forget',component: Forget,meta: {title: '忘记密码'}},
     {path: '/change',name: 'change',component: Change,meta: {title: '忘记密码'}},
-    {path: '/index',name: 'index',component: Index,meta: {title: '神农牧'}, children:[
-    	{path: '/home',name: 'home',component: Home, meta: {title: '神农牧'}},
-    	{path: '/integral',name: 'integral',component: Integral, meta: {title: '神农牧'}},
-    	{path: '/shopcar',name: 'shopcar',component: Shopcar, meta: {title: '神农牧'}},
-    	{path: '/mine',name: 'mine',component: Mine, meta: {title: '神农牧'}}
+    {path: '/index',name: 'index',component: Index,meta: {title: ''}, children:[
+    	{path: '/home',name: 'home',component: Home, meta: {title: ''}},
+    	{path: '/integral',name: 'integral',component: Integral, meta: {title: ''}},
+    	{path: '/shopcar',name: 'shopcar',component: Shopcar, meta: {title: ''}},
+    	{path: '/mine',name: 'mine',component: Mine, meta: {title: ''}}
     ]},
     {path: '/setmine',name: 'setmine',component: Setmine,meta: {title: '设置'}},
     {path: '/about',name: 'about',component: About,meta: {title: '关于'}},
