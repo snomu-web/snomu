@@ -14,8 +14,10 @@ Vue.prototype.$axios = axios
 
 // 全局请求头
 axios.interceptors.request.use(function (config) {    // 这里的config包含每次请求的内容
-    config.headers['X-With-USER_NAME'] = localStorage.getItem('userName')
-    config.headers['X-With-CLIENTID'] = localStorage.getItem('cookId')
+		if(config.url.indexOf("login") == -1){
+	    config.headers['X-With-USER_NAME'] = localStorage.getItem('userName')
+	    config.headers['X-With-CLIENTID'] = localStorage.getItem('cookId')
+	  }
     return config;
 }, function (err) {
     return Promise.reject(err);

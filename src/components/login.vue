@@ -125,10 +125,9 @@
 		      	}).then(res => {
 			        if (res.data.code == 0) {
 			        	Toast(res.data.msg)
-			        	let cookId = res.data.data['X-With-CLIENTID']
 			        	localStorage.setItem('userId',res.data.data.userId)
 			        	localStorage.setItem('userName',res.data.data.userName)
-						localStorage.setItem('cookId',cookId)			        	
+						localStorage.setItem('cookId',res.data.data.clientId)			        	
 			        	that.$router.push({path:'/home'})
 			        } else {
 			          	Toast(res.data.msg)
